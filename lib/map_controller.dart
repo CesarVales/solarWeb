@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class map_controller extends ChangeNotifier {
   double lat = 0.0;
@@ -21,10 +23,12 @@ class map_controller extends ChangeNotifier {
     getPosicao();
   }
 
-  getMarker() {
+  getMarker() async {
+    Position posicao = await _posicaoAtual();
+
     markers.add(Marker(
         markerId: MarkerId('markerUsuario'),
-        position: LatLng(lat, long),
+        position: LatLng(posicao.latitude, posicao.longitude),
         icon: BitmapDescriptor.defaultMarker
 
     ));
@@ -42,7 +46,14 @@ class map_controller extends ChangeNotifier {
     notifyListeners();
 
   }
-
+  void moveCameraToPosition(LatLng position) {
+    _mapsController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        target: position,
+        zoom: 18,
+      ),
+    ));
+  }
   Future<Position> _posicaoAtual() async {
     LocationPermission permissao;
 
@@ -66,3 +77,4 @@ class map_controller extends ChangeNotifier {
     return await Geolocator.getCurrentPosition();
   }
 }
+
