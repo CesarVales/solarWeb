@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'home.dart';
-
+import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,66 +32,119 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return MaterialApp(
         title: 'My App',
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
         home: Scaffold(
-          drawer: Drawer(
-            backgroundColor: Colors.green,width: Get.width*0.5,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children:  [
-                SizedBox(
-                    height: 100,
-                    child: DrawerHeader(
+          key:  _scaffoldKey,
 
-                      child: Text('SolarWeb',style: TextStyle(color: Colors.white,fontSize: 30)),
-                      decoration: BoxDecoration(color: Colors.green),
-                    )),
-                Builder(builder: (BuildContext context) {
-                  return ListTile(
-                    title: Text('Home',
+        appBar: AppBar(
+              title: Text('SolarWeb'),
+              backgroundColor: Colors.green,
+              leading: Icon(
+                Icons.sunny,
+                color: Colors.yellow,
+                size: 40,
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer(); // use this line instead
+                  },
+                ),
+              ],
+            ),
+            drawer: Drawer(
+              backgroundColor: Colors.green,
+              width: Get.width * 0.5,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  SizedBox(
+                      height: 100,
+                      child: DrawerHeader(
+                        child: Text('SolarWeb',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 30)),
+                        decoration: BoxDecoration(color: Colors.green),
+                      )),
+                  Builder(builder: (BuildContext context) {
+                    return ListTile(
+                      title: Text('Home',
+                          style: TextStyle(color: Colors.white, fontSize: 18)),
+                      textColor: Colors.white,
+                      leading: Icon(
+                        Icons.home,
+                        size: 35,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => home()));
+                      },
+                    );
+                  }),
+                  Builder(builder: (BuildContext context) {
+                    return ListTile(
+                      title: Text('Login',
+                          style: TextStyle(color: Colors.white, fontSize: 18)),
+                      textColor: Colors.white,
+                      leading: Icon(
+                        Icons.login,
+                        size: 35,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => login()));
+                      },
+                    );
+                  }),
+                  ListTile(
+                    title: Text('Meus Locais',
                         style: TextStyle(color: Colors.white, fontSize: 18)),
-                    textColor: Colors.white,
                     leading: Icon(
-                      Icons.home,
+                      Icons.location_pin,
                       size: 35,
                       color: Colors.white,
                     ),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => home()));
-                    },
-                  );
-                }),
-
-                ListTile(
-                  title: Text('Login',style: TextStyle(color: Colors.white,fontSize: 18)),
-                  leading: Icon(Icons.login, size: 35,color: Colors.white,),
-
-
-                ),
-                ListTile(
-                  title: Text('Meus Locais',style: TextStyle(color: Colors.white,fontSize: 18)),
-                  leading: Icon(Icons.location_pin, size: 35,color: Colors.white,),
-                ),
-                ListTile(
-                  title: Text('Artigos',style: TextStyle(color: Colors.white,fontSize: 18)),
-                  leading: Icon(Icons.menu_book, size: 35,color: Colors.white,),
-                )
+                  ),
+                  ListTile(
+                    title: Text('Artigos',
+                        style: TextStyle(color: Colors.white, fontSize: 18)),
+                    leading: Icon(
+                      Icons.menu_book,
+                      size: 35,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            body: Stack(
+              fit: StackFit.loose,
+              children: [
+                mapWidget(),
+                const MyBottomSheet(),
               ],
             ),
-          ),
-          body: Stack(
-            fit: StackFit.loose,
-            children: [
-              mapWidget(),
-              const MyBottomSheet(),
-            ],
-          ),
-        ));
+            floatingActionButton: Align(
+                heightFactor: 2.0,
+                widthFactor: 0.7,
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+
+                  },
+                  label: Icon(Icons.article_outlined),
+                  splashColor: Colors.yellow,
+                  hoverColor: Colors.yellow,
+                )
+            )));
   }
 }
 
@@ -99,20 +152,9 @@ class mapWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text('SolarWeb'), backgroundColor: Colors.green,
-          leading: Icon(Icons.sunny, color: Colors.yellow,size: 40,),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer(); // exibe o novo Drawer
-              },
-            ),
-          ],
-        ),
-        body: Stack(children:[
-          ChangeNotifierProvider<map_controller>(
+
+      body: Stack(children: [
+        ChangeNotifierProvider<map_controller>(
           create: (context) => map_controller(),
           child: Builder(
             builder: (context) {
@@ -123,48 +165,45 @@ class mapWidget extends StatelessWidget {
                   target: LatLng(local.lat, local.long),
                   zoom: 18,
                 ),
-                zoomControlsEnabled: true,
+                zoomControlsEnabled: false,
                 myLocationButtonEnabled: true,
                 onMapCreated: local.onMapCreated,
                 markers: local.markers,
               );
             },
           ),
-        ),Container(
-              padding: EdgeInsets.symmetric(horizontal: 10 ),
-              margin: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
-              width: Get.width*0.9,
-              transformAlignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-
-            onTap: () async {
-              // should show search screen here
-              /*showSearch(
+        ),
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+            width: Get.width * 0.9,
+            transformAlignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TextField(
+              onTap: () async {
+                // should show search screen here
+                /*showSearch(
                 context: context,
                 // we haven't created AddressSearch class
                 // this should be extending SearchDelegate
                 delegate: AddressSearch(),
               );*/
-            },
-            // with some styling
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-
-              hintText: "Busque um endereço",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 8.0, top: 6.0),
-            ),
-          )),
-        ]
-    )
+              },
+              // with some styling
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: "Busque um endereço",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 8.0, top: 6.0),
+              ),
+            )),
+      ]),
     );
   }
 }
 
-class AddressSearch {
-}
+class AddressSearch {}
