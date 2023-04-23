@@ -17,16 +17,18 @@ final List<String> entries = [
 ];
 
 class _MyBottomSheetState extends State<MyBottomSheet> {
+
   @override
   Widget build(BuildContext context) {
+
     return DraggableScrollableSheet(
       initialChildSize: 0.015,
       minChildSize: 0.005,
       maxChildSize: 0.6,
       builder: (BuildContext context, ScrollController scrollController) {
+
         return Material(
             color:Color.fromRGBO(144, 238, 145, 0.5450980392156862),
-
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -65,7 +67,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(),
             ));
-      },
+      }
+
     );
   }
 }

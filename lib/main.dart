@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:solar_web/drawer.dart';
 import 'package:solar_web/my_bottom_sheet.dart';
 import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+import 'AppBarWidget.dart';
 import 'home.dart';
 import 'login.dart';
 
@@ -40,92 +42,10 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.green,
         ),
         home: Scaffold(
-          key:  _scaffoldKey,
-
-        appBar: AppBar(
-              title: Text('SolarWeb'),
-              backgroundColor: Colors.green,
-              leading: Icon(
-                Icons.sunny,
-                color: Colors.yellow,
-                size: 40,
-              ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer(); // use this line instead
-                  },
-                ),
-              ],
+            key: _scaffoldKey,
+            appBar: AppBarWidget(scaffoldKey: _scaffoldKey,
             ),
-            drawer: Drawer(
-              backgroundColor: Colors.green,
-              width: Get.width * 0.5,
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  SizedBox(
-                      height: 100,
-                      child: DrawerHeader(
-                        child: Text('SolarWeb',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 30)),
-                        decoration: BoxDecoration(color: Colors.green),
-                      )),
-                  Builder(builder: (BuildContext context) {
-                    return ListTile(
-                      title: Text('Home',
-                          style: TextStyle(color: Colors.white, fontSize: 18)),
-                      textColor: Colors.white,
-                      leading: Icon(
-                        Icons.home,
-                        size: 35,
-                        color: Colors.white,
-                      ),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => home()));
-                      },
-                    );
-                  }),
-                  Builder(builder: (BuildContext context) {
-                    return ListTile(
-                      title: Text('Login',
-                          style: TextStyle(color: Colors.white, fontSize: 18)),
-                      textColor: Colors.white,
-                      leading: Icon(
-                        Icons.login,
-                        size: 35,
-                        color: Colors.white,
-                      ),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => login()));
-                      },
-                    );
-                  }),
-                  ListTile(
-                    title: Text('Meus Locais',
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
-                    leading: Icon(
-                      Icons.location_pin,
-                      size: 35,
-                      color: Colors.white,
-                    ),
-                  ),
-                  ListTile(
-                    title: Text('Artigos',
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
-                    leading: Icon(
-                      Icons.menu_book,
-                      size: 35,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            ),
+            drawer: drawer(),
             body: Stack(
               fit: StackFit.loose,
               children: [
@@ -137,14 +57,11 @@ class _MyAppState extends State<MyApp> {
                 heightFactor: 2.0,
                 widthFactor: 0.7,
                 child: FloatingActionButton.extended(
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                   label: Icon(Icons.article_outlined),
                   splashColor: Colors.yellow,
                   hoverColor: Colors.yellow,
-                )
-            )));
+                ))));
   }
 }
 
@@ -152,7 +69,6 @@ class mapWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(children: [
         ChangeNotifierProvider<map_controller>(
           create: (context) => map_controller(),

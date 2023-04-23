@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:solar_web/AppBarWidget.dart';
+import 'package:solar_web/drawer.dart';
 import 'newAccount.dart';
 import 'home.dart';
 import 'login.dart';
@@ -13,23 +15,11 @@ class login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('SolarWeb'),
-        backgroundColor: Colors.green,
-        leading: Icon(
-          Icons.sunny,
-          color: Colors.yellow,
-          size: 40,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              _scaffoldKey.currentState?.openDrawer(); // use this line instead
-            },
-          ),
-        ],
-      ),
+      key: _scaffoldKey,
+
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey,
+
+      ),drawer: drawer(),
       body: Container(
         key: _formKey,
         child: Column(
