@@ -72,19 +72,36 @@ class drawer extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => newLocale()));
             },
           ),
+          // ListTile(
+          //   title: Text('Artigos',
+          //       style: TextStyle(color: Colors.white, fontSize: 18)),
+          //   leading: Icon(
+          //     Icons.menu_book,
+          //     size: 35,
+          //     color: Colors.white,
+          //   ),
+          //   onTap: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => manutencao()));
+          //   },
+          // ),
           ListTile(
-            title: Text('Artigos',
+            title: Text('Manutenções',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
-            leading: Icon(
-              Icons.menu_book,
-              size: 35,
-              color: Colors.white,
-            ),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => manutencao()));
             },
           ),
+          ListTile(
+            title: Text('Minha conta',
+                style: TextStyle(color: Colors.white, fontSize: 18)),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => conta()));
+            },
+          ),
+
         ],
       ),
     );
