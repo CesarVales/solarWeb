@@ -6,6 +6,9 @@ import 'package:solar_web/main.dart';
 
 import 'home.dart';
 import 'login.dart';
+import 'newLocale.dart';
+import 'minha_conta.dart';
+import 'newManutencao.dart';
 
 class drawer extends StatelessWidget {
   @override
@@ -64,6 +67,10 @@ class drawer extends StatelessWidget {
               size: 35,
               color: Colors.white,
             ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => newLocale()));
+            },
           ),
           ListTile(
             title: Text('Artigos',
@@ -73,7 +80,11 @@ class drawer extends StatelessWidget {
               size: 35,
               color: Colors.white,
             ),
-          )
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => manutencao()));
+            },
+          ),
         ],
       ),
     );
