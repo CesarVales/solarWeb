@@ -19,7 +19,7 @@ class drawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 100,
             child: DrawerHeader(
               child: Text('SolarWeb',
@@ -29,10 +29,10 @@ class drawer extends StatelessWidget {
           ),
           Builder(builder: (BuildContext context) {
             return ListTile(
-              title: Text('Home',
+              title: const Text('Home',
                   style: TextStyle(color: Colors.white, fontSize: 18)),
               textColor: Colors.white,
-              leading: Icon(
+              leading: const Icon(
                 Icons.home,
                 size: 35,
                 color: Colors.white,
@@ -45,10 +45,10 @@ class drawer extends StatelessWidget {
           }),
           Builder(builder: (BuildContext context) {
             return ListTile(
-              title: Text('Login',
+              title: const Text('Login',
                   style: TextStyle(color: Colors.white, fontSize: 18)),
               textColor: Colors.white,
-              leading: Icon(
+              leading: const Icon(
                 Icons.login,
                 size: 35,
                 color: Colors.white,
@@ -60,9 +60,9 @@ class drawer extends StatelessWidget {
             );
           }),
           ListTile(
-            title: Text('Meus Locais',
+            title: const Text('Meus Locais',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
-            leading: Icon(
+            leading: const Icon(
               Icons.location_pin,
               size: 35,
               color: Colors.white,
@@ -86,7 +86,7 @@ class drawer extends StatelessWidget {
           //   },
           // ),
           ListTile(
-            title: Text('Manutenções',
+            title: const Text('Manutenções',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
             onTap: () {
               Navigator.push(context,
@@ -94,7 +94,7 @@ class drawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Minha conta',
+            title: const Text('Minha conta',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
             onTap: () {
               Navigator.push(context,

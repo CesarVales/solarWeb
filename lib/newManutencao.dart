@@ -109,7 +109,6 @@ class manutencao extends StatelessWidget {
             SizedBox(
               width: 300.0,
               child: TextField(
-                readOnly: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),

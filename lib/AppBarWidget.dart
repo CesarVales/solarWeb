@@ -9,16 +9,16 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
 
-      title: Text('SolarWeb'),
+      title: const Text('SolarWeb'),
       backgroundColor: Colors.green,
-      leading: Icon(
+      leading: const Icon(
         Icons.sunny,
         color: Colors.yellow,
         size: 40,
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             scaffoldKey.currentState
                 ?.openDrawer(); // use this line instead
