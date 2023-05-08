@@ -28,7 +28,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
       builder: (BuildContext context, ScrollController scrollController) {
 
         return Material(
-            color:Color.fromRGBO(144, 238, 145, 0.5450980392156862),
+            color:Colors.green,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),

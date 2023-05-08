@@ -1,27 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:solar_web/AppBarWidget.dart';
+import 'package:solar_web/drawer.dart';
 
 class newAccount extends StatelessWidget {
   final _tLogin = TextEditingController();
   final _tSenha = TextEditingController();
   final _tNome = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cadastro de Usuário'), backgroundColor: Colors.green,
-        leading: Icon(Icons.sunny, color: Colors.yellow, size: 40,),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer(); // exibe o novo Drawer
-            },
-          ),
-        ],
-      ),
+      key: _scaffoldKey,
+
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey,),drawer: drawer(),
       body: Container(
         key: _formKey,
         child: Column(
