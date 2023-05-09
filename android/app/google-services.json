@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "787627255680",
+    "project_id": "solarweb-f7f4c",
+    "storage_bucket": "solarweb-f7f4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787627255680:android:b65bd2d4a76d9dfaf60365",
+        "android_client_info": {
+          "package_name": "com.example.solar_web"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787627255680-0017s4gj6liadvkrc7a7daq1fp38dfup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnGFtacDwegae6BluIUByzyE6TGi5NiKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787627255680-0017s4gj6liadvkrc7a7daq1fp38dfup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
