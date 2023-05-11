@@ -11,9 +11,15 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'AppBarWidget.dart';
 import 'home.dart';
 import 'login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:solar_web/firebase_options.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  // Carregando banco de dados
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FlutterConfig.loadEnvVariables();
   runApp(
     ChangeNotifierProvider<map_controller>(
