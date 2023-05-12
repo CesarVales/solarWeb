@@ -17,9 +17,8 @@ class login extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
 
-      appBar: AppBarWidget(scaffoldKey: _scaffoldKey,
-
-      ),drawer: drawer(),
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey,)
+      ,drawer: drawer(),
       body: Container(
         key: _formKey,
         child: Column(

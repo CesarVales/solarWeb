@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:solar_web/dbControler.dart';
+
+import 'AppBarWidget.dart';
 
 class newLocale extends StatefulWidget {
   const newLocale({Key? key}) : super(key: key);
@@ -12,22 +15,26 @@ class _newLocale extends State<newLocale>{
   final _tEndereco = TextEditingController();
   bool myLocale = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>(); // cesinha
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cadastro de Local'), backgroundColor: Colors.green,
-        leading: Icon(Icons.sunny, color: Colors.yellow, size: 40,),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer(); // exibe o novo Drawer
-            },
-          ),
-        ],
-      ),
+      key: _scaffoldKey,//cesinha
+      // appBar: AppBar(
+      //   title: Text('Cadastro de Local'), backgroundColor: Colors.green,
+      //   leading: Icon(Icons.sunny, color: Colors.yellow, size: 40,),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.menu),
+      //       onPressed: () {
+      //         Scaffold.of(context).openDrawer(); // exibe o novo Drawer
+      //       },
+      //     ),
+      //   ],
+      // ),
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey,),
       body: Container(
         key: _formKey,
         child: Column(
@@ -102,7 +109,10 @@ class _newLocale extends State<newLocale>{
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-
+                //Cesinha 12/05
+                  final apelido = _tApelido.text;
+                  final endereco = _tEndereco.text;
+                  criarLocal( latitude: 0.0, longitude: 0.0, nome: apelido);
               },
               child: Text('Cadastrar'),
             ),

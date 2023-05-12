@@ -45,6 +45,8 @@ dependencies:
   flutter_staggered_animations: ^1.1.0
   http: any
   google_places_for_flutter: ^1.0.0
+  firebase_core: ^2.11.0
+  cloud_firestore: ^4.7.0
 
 assets:
   - assets/
