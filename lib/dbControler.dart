@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //Stream<List<User>> readUsers() => FirebaseFirestore.instance.collection('usuario').snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
 
 //Future criarUsuario({required int id , required Int id_usuario, required double latitude, required double longitude, required String casa}) async{
-class usuario {
   Future criarUsuario({required int id , required String login, required String nome, required String senha}) async{
 
     final json = {
@@ -27,7 +26,7 @@ class usuario {
       return null;
     }
   }
-}
+
 
 
 Future<Map<String, dynamic>?> lerLocal(String nome) async {
