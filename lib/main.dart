@@ -9,6 +9,7 @@ import 'package:solar_web/drawer.dart';
 import 'package:solar_web/my_bottom_sheet.dart';
 import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
+import 'package:solar_web/searchScreen.dart';
 import 'package:solar_web/services/auth_service.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
@@ -45,17 +46,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     User? user = auth.currentUser;
-    print(user) ;
+    print("Usuário: ${user?.email}") ;
     return MaterialApp(
         title: 'My App',
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
         home: Scaffold(
-            key: _scaffoldKey,
-            appBar: AppBarWidget(scaffoldKey: _scaffoldKey,
+            key: scaffoldKey,
+            appBar: AppBarWidget(scaffoldKey: scaffoldKey,
             ),
             drawer: drawer(),
             body: Stack(
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                 widthFactor: 0.7,
                 child: FloatingActionButton.extended(
                   onPressed: () async {
-                    final usuario =  await lerPlaca('jMAxzwvAkQyC2RkWHHjy');
+                    final usuario =  await criarUsuario(nome: 'Cesinha Salsinha Cebolinha',senha: '999999',login:'Salsinha' );
                     if(usuario != null){
                       usuario.forEach((key, value) {
                         print("$key - $value");
@@ -121,13 +122,8 @@ class mapWidget extends StatelessWidget {
             ),
             child: TextField(
               onTap: () async {
-                // should show search screen here
-                /*showSearch(
-                context: context,
-                // we haven't created AddressSearch class
-                // this should be extending SearchDelegate
-                delegate: AddressSearch(),
-              );*/
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const searchScreen()));
               },
               // with some styling
               decoration: InputDecoration(

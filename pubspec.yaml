@@ -48,7 +48,7 @@ dependencies:
   firebase_core: ^2.11.0
   cloud_firestore: ^4.7.0
   firebase_auth: ^4.6.0
-
+  google_place: ^0.4.7
 assets:
   - assets/
 dev_dependencies:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:get/get.dart';
 import 'package:solar_web/AppBarWidget.dart';
+import 'package:solar_web/dbControler.dart';
 import 'package:solar_web/drawer.dart';
 import 'newAccount.dart';
 import 'home.dart';
@@ -152,6 +153,7 @@ class manutencao extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
+                criarManutencao('(31)9999-9999', '09/09/2009', 'Instalação industrial, necessaria atençao', 'Roberto');
               },
               child: Text('Salvar Manutenção'),
             ),
