@@ -22,9 +22,9 @@ class drawer extends StatelessWidget {
           const SizedBox(
             height: 100,
             child: DrawerHeader(
+              decoration: BoxDecoration(color: Colors.green),
               child: Text('SolarWeb',
                   style: TextStyle(color: Colors.white, fontSize: 30)),
-              decoration: BoxDecoration(color: Colors.green),
             ),
           ),
           Builder(builder: (BuildContext context) {
@@ -55,7 +55,7 @@ class drawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => login()));
+                    MaterialPageRoute(builder: (context) => login(context: context,)));
               },
             );
           }),

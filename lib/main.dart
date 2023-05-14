@@ -1,4 +1,6 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,9 +9,9 @@ import 'package:solar_web/drawer.dart';
 import 'package:solar_web/my_bottom_sheet.dart';
 import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
+import 'package:solar_web/services/auth_service.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -18,10 +20,15 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(
-    ChangeNotifierProvider<map_controller>(
-      create: (_) => map_controller(),
-      child: MyApp(),
-    ),
+    MultiProvider(providers: [
+      ChangeNotifierProvider<map_controller>(
+        create: (_) => map_controller(),
+
+      ),
+      ChangeNotifierProvider(create: (context) => AuthService()),
+    ],child: MyApp()
+
+    )
   );
 }
 
@@ -34,11 +41,13 @@ class _MyAppState extends State<MyApp> {
   var locale = map_controller().getPosicao();
   var locale2 = map_controller();
   var db = FirebaseFirestore.instance;
+  var auth =  FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+    User? user = auth.currentUser;
+    print(user) ;
     return MaterialApp(
         title: 'My App',
         theme: ThemeData(
@@ -61,10 +70,10 @@ class _MyAppState extends State<MyApp> {
                 widthFactor: 0.7,
                 child: FloatingActionButton.extended(
                   onPressed: () async {
-                    final usuario =  await lerLocal('Casa Manoel Gomes');
+                    final usuario =  await lerPlaca('jMAxzwvAkQyC2RkWHHjy');
                     if(usuario != null){
                       usuario.forEach((key, value) {
-                        print(value);
+                        print("$key - $value");
                       });
                     }else{
                       print('VALOR NULO');

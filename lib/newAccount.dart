@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/drawer.dart';
+import 'package:solar_web/services/auth_service.dart';
 
 class newAccount extends StatelessWidget {
   final _tLogin = TextEditingController();
@@ -10,8 +12,21 @@ class newAccount extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  //cesinha
+  final BuildContext context;
+  newAccount({required this.context});
+
+  registrar(BuildContext context) async {
+    try{
+      await Provider.of<AuthService>(context, listen: false).registrar(_tLogin.text,_tSenha.text);
+    }on AuthException catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+  //cesinha fim
   @override
   Widget build(BuildContext context) {
+
 
     return Scaffold(
       key: _scaffoldKey,
@@ -19,7 +34,8 @@ class newAccount extends StatelessWidget {
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey,),drawer: drawer(),
       body: Container(
         key: _formKey,
-        child: Column(
+        child: SingleChildScrollView(child:
+            Column(
           children: <Widget>[
             SizedBox(
                 height: 230.0
@@ -48,7 +64,7 @@ class newAccount extends StatelessWidget {
             SizedBox(
               width: 300.0,
               child: TextField(
-                obscureText: true,
+                obscureText: false,
                 controller: _tLogin,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -84,7 +100,7 @@ class newAccount extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                _onClickNew(context);
+                registrar(context);
               },
               child: Text('Cadastrar'),
             ),
@@ -92,7 +108,7 @@ class newAccount extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
-        ),
+        ),),
       ),
     );
   }

@@ -1,17 +1,51 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/drawer.dart';
+import 'package:solar_web/home.dart';
+import 'package:solar_web/main.dart';
+import 'package:solar_web/services/auth_service.dart';
+import 'package:solar_web/services/userProvider.dart';
 import 'newAccount.dart';
-import 'home.dart';
-import 'login.dart';
-import 'newLocale.dart';
+
+import 'package:provider/provider.dart';
+// Em algum lugar do código, provavelmente no início do app:
+final userProvider = UserProvider();
+
+
 class login extends StatelessWidget {
+
   final _tLogin = TextEditingController();
   final _tSenha = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final BuildContext context;
+
+  login({required this.context});
+
+  //cesinha
+
+  loginUser(BuildContext context) async {
+    try{
+      await Provider.of<AuthService>(context, listen: false).login(_tLogin.text,_tSenha.text);
+      // Quando o usuário fizer login atualiza o provider
+      User? user = FirebaseAuth.instance.currentUser;
+      userProvider.setUser(user);
+      //Vai para tela principal (Mapa)
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyApp()),
+      );
+
+    }on AuthException catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  // fim cesinha
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +55,9 @@ class login extends StatelessWidget {
       ,drawer: drawer(),
       body: Container(
         key: _formKey,
-        child: Column(
-          children: <Widget>[
+        child: SingleChildScrollView(
+          child: Column(
+          children: [
             SizedBox(
                 height: 230.0
             ),
@@ -67,7 +102,7 @@ class login extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                _onClickLogin(context);
+                loginUser(context);
               },
               child: Text('Entrar'),
             ),
@@ -78,12 +113,13 @@ class login extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => newAccount()));},
+                      MaterialPageRoute(builder: (context) => newAccount(context: context,)));},
                   child: Text('Criar conta'),
                 ),
               ],
             ),
           ],
+        ),
         ),
       ),
     );
