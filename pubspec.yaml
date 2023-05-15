@@ -49,6 +49,7 @@ dependencies:
   cloud_firestore: ^4.7.0
   firebase_auth: ^4.6.0
   google_place: ^0.4.7
+  flutter_riverpod: ^2.3.6
 assets:
   - assets/
 dev_dependencies:

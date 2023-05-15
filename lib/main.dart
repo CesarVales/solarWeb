@@ -14,6 +14,7 @@ import 'package:solar_web/services/auth_service.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:solar_web/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,8 +35,10 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+
   @override
   State<MyApp> createState() => _MyAppState();
+
 }
 
 class _MyAppState extends State<MyApp> {
@@ -47,8 +50,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
+    if (globals.posicaoEnd != null) {
+      // Faça algo com posicaoEnd
+    }
     User? user = auth.currentUser;
-    print("Usuário: ${user?.email}") ;
+    print("Usuário: ${user?.email}");
     return MaterialApp(
         title: 'My App',
         theme: ThemeData(
@@ -90,6 +96,10 @@ class _MyAppState extends State<MyApp> {
 class mapWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var searchBarControler = TextEditingController();
+    if (globals.posicaoEnd != null) {
+      searchBarControler.text = globals.posicaoEnd!.formattedAddress!;
+    }
     return Scaffold(
       body: Stack(children: [
         ChangeNotifierProvider<map_controller>(
@@ -112,21 +122,37 @@ class mapWidget extends StatelessWidget {
           ),
         ),
         Container(
+
             padding: EdgeInsets.symmetric(horizontal: 10),
             margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            width: Get.width * 0.9,
-            transformAlignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.yellow,
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: Offset(0, 2), // Define a direção da sombra (horizontal, vertical)
+                ),
+              ],
             ),
             child: TextField(
+
+              controller: searchBarControler,
               onTap: () async {
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const searchScreen()));
+                if(searchBarControler.text.isEmpty){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const searchScreen())
+                  );
+                }
+
               },
               // with some styling
               decoration: InputDecoration(
+                suffixIcon: GestureDetector(onTap: () {
+                  searchBarControler.clear();
+                },child:Icon(Icons.clear)),
                 filled: true,
                 fillColor: Colors.white,
                 hintText: "Busque um endereço",
