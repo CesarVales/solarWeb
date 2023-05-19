@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,11 +17,14 @@ class conta extends StatelessWidget {
   final _meses = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  var auth =  FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    _nome.text = "nome";
-    _email.text = "email";
+    User? user = auth.currentUser;
+
+    _nome.text = 'admin';
+    _email.text =  user?.email as String;
     _meses.text = '6';
     return Scaffold(
       key: _scaffoldKey,

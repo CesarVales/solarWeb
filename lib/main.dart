@@ -77,14 +77,17 @@ class _MyAppState extends State<MyApp> {
                 widthFactor: 0.7,
                 child: FloatingActionButton.extended(
                   onPressed: () async {
-                    final usuario =  await criarUsuario(nome: 'Cesinha Salsinha Cebolinha',senha: '999999',login:'Salsinha' );
-                    if(usuario != null){
-                      usuario.forEach((key, value) {
-                        print("$key - $value");
-                      });
-                    }else{
-                      print('VALOR NULO');
-                    }
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const searchScreen())
+                    );
+                    // final usuario =  await lerUsuario('Cesinha');
+                    // if(usuario != null){
+                    //   usuario.forEach((key, value) {
+                    //     print("$key - $value");
+                    //   });
+                    // }else{
+                    //   print('VALOR NULO');
+                    // }
                   },
                   label: Icon(Icons.article_outlined),
                   splashColor: Colors.yellow,

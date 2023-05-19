@@ -1,16 +1,29 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solar_web/main.dart';
+import 'package:solar_web/meus_locais.dart';
 
 import 'home.dart';
 import 'login.dart';
 import 'newLocale.dart';
 import 'minha_conta.dart';
 import 'newManutencao.dart';
+void _signOut() {
+  FirebaseAuth.instance.signOut();
+  //FirebaseUser user = FirebaseAuth.instance.currentUser;
+  //print('$user');
+  runApp(
+      new MaterialApp(
+        //home: new LoginPage(),
+      )
 
+  );
+}
 class drawer extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -69,7 +82,7 @@ class drawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => newLocale()));
+                  MaterialPageRoute(builder: (context) => meus_locais()));
             },
           ),
           // ListTile(

@@ -12,18 +12,18 @@ import 'newLocale.dart';
 import 'package:intl/intl.dart';
 
 class manutencao extends StatelessWidget {
-  final _nome = TextEditingController();
+  final _realizador = TextEditingController();
   final _email = TextEditingController();
-  final _meses = TextEditingController();
+  //final _meses = TextEditingController();
   final _data = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final  _telefone = TextEditingController();
+  final  _descricao = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    _nome.text = "nome";
-    _email.text = "email";
-    _meses.text = '6';
+    //_meses.text = '6';
     return Scaffold(
       key: _scaffoldKey,
 
@@ -41,6 +41,7 @@ class manutencao extends StatelessWidget {
             SizedBox(
               width: 300.0,
               child: TextField(
+                controller: _descricao,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
@@ -108,8 +109,10 @@ class manutencao extends StatelessWidget {
               ),
             ),
             SizedBox(
+
               width: 300.0,
               child: TextField(
+                controller: _realizador,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
@@ -128,6 +131,7 @@ class manutencao extends StatelessWidget {
             SizedBox(
               width: 300.0,
               child: TextField(
+                controller:_telefone ,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
@@ -153,7 +157,7 @@ class manutencao extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                criarManutencao('(31)9999-9999', '09/09/2009', 'Instalação industrial, necessaria atençao', 'Roberto');
+                criarManutencao(_telefone.text, _data.text, _descricao.text, _realizador.text);
               },
               child: Text('Salvar Manutenção'),
             ),

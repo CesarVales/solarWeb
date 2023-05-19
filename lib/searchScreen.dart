@@ -25,7 +25,7 @@ class _searchScreenState extends State<searchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    googlePlace = GooglePlace('');
+    googlePlace = GooglePlace('AIzaSyDExRcS073ga9tfDmfynJA4n_regjAC3yg');
     focusNode = FocusNode();
   }
 

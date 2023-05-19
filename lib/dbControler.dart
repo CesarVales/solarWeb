@@ -39,14 +39,15 @@ Future<String> getLastId(String colecao) async {
   }
 
   Future<Map<String, dynamic>?> lerUsuario(String nome) async {
-    final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(nome);
-    final docSnapshot = await docUsuario.get();
+    final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(nome).id;
+    //final docSnapshot = await docUsuario.get();
 
-    if (docSnapshot.exists) {
-      return docSnapshot.data() as Map<String, dynamic>;
-    } else {
-      return null;
-    }
+    print(docUsuario);
+    // if (docSnapshot.exists) {
+    //   return docSnapshot.data() as Map<String, dynamic>;
+    // } else {
+    //   return null;
+    // }
   }
 
 
@@ -155,9 +156,9 @@ Future criarManutencao(String contato,String data,String descricao, String reali
     "data": data,
     "descricao": descricao,
     "realizador":realizador,
-    "id": getLastId('placa'),
+    //"id": getLastId('placa'),
   };
 
-  final docUsuario = FirebaseFirestore.instance.collection('placa').doc(contato);
+  final docUsuario = FirebaseFirestore.instance.collection('manutencao').doc(contato);
   await docUsuario.set(json);
 }
