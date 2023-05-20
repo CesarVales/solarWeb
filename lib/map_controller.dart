@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:solar_web/globals.dart' as globals;
 
 class map_controller extends ChangeNotifier {
   double lat = 0.0;
@@ -19,13 +20,25 @@ class map_controller extends ChangeNotifier {
   }*/
   get mapsController => _mapsController;
 
-  onMapCreated(GoogleMapController gmc) async {
+  onMapCreated(GoogleMapController gmc,{LatLng? customPosition}) async {
     _mapsController = gmc;
-    await getPosicao();
-    await setMarker();
+    if (globals.posicaoEnd != null) {
+      final latitude = globals.posicaoEnd!.geometry!.location!.lat;
+      final longitude = globals.posicaoEnd?.geometry?.location?.lng;
+      await setPosicao(customPosition: LatLng(latitude!,longitude!));
+      await setMarker(customPosition: LatLng(latitude,longitude));
+
+
+    }else{
+      await setPosicao();
+      await setMarker();
+
+    }
+
   }
 
-  setMarker() async {
+  setMarker({LatLng? customPosition}) async {
+
     Position posicao = await _posicaoAtual();
 
     String imgurl = "https://cdn3.iconfinder.com/data/icons/map-objects/154/sun-light-poi-pointer-location-160.png";
@@ -35,21 +48,27 @@ class map_controller extends ChangeNotifier {
         .asUint8List();
     markers.add(Marker(
         markerId: MarkerId('markerUsuario'),
-        position: LatLng(posicao.latitude, posicao.longitude),
+        position: customPosition = customPosition ?? LatLng(posicao.latitude, posicao.longitude),
         icon: BitmapDescriptor.fromBytes(bytes),
         draggable: true,
 
 
     ));
     notifyListeners();
+
     return markers;
   }
-  Future<LatLng> getPosicao() async {
+  Future<LatLng> setPosicao({LatLng? customPosition}) async {
     try {
+
       Position posicao = await _posicaoAtual();
       lat = posicao.latitude;
       long = posicao.longitude;
-      _mapsController.animateCamera(CameraUpdate.newLatLng(LatLng(lat, long)));
+      if (customPosition != null) {
+        _mapsController.animateCamera(CameraUpdate.newLatLng(customPosition));
+      } else {
+        _mapsController.animateCamera(CameraUpdate.newLatLng(LatLng(lat, long)));
+      }
     } catch (e) {
       erro = e.toString();
     }

@@ -42,8 +42,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var locale = map_controller().getPosicao();
-  var locale2 = map_controller();
+  
   var db = FirebaseFirestore.instance;
   var auth =  FirebaseAuth.instance;
 

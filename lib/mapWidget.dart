@@ -27,7 +27,10 @@ class _mapWidgetState extends State<mapWidget> {
     var searchBarControler = TextEditingController();
     if (globals.posicaoEnd != null) {
       searchBarControler.text = globals.posicaoEnd!.formattedAddress!;
+
+
     }
+
     return Scaffold(
       body: Stack(children: [
         ChangeNotifierProvider<map_controller>(
@@ -73,12 +76,15 @@ class _mapWidgetState extends State<mapWidget> {
               controller: searchBarControler,
               onTap: () async {
                 if(searchBarControler.text.isEmpty){
-                  Navigator.push(context,
+                  Navigator.pop(context,
                       MaterialPageRoute(builder: (context) => const searchScreen())
-                  );
-                }
+                  );}
+                // else {
+                //   globals.posicaoEnd = null;
+                // }
 
               },
+
               // with some styling
               decoration: InputDecoration(
                 suffixIcon: GestureDetector(onTap: () {
