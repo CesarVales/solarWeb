@@ -96,7 +96,12 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class mapWidget extends StatelessWidget {
+class mapWidget extends StatefulWidget {
+  @override
+  State<mapWidget> createState() => _mapWidgetState();
+}
+
+class _mapWidgetState extends State<mapWidget> {
   @override
   Widget build(BuildContext context) {
     var searchBarControler = TextEditingController();

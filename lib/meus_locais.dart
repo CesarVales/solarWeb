@@ -19,7 +19,6 @@ class _meus_locaisState extends State<meus_locais> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: scaffoldKey),
-
       body: StreamBuilder(
         stream: _locaisStream,
         builder: (BuildContext context, snapshot) {

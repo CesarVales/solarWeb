@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
@@ -20,21 +21,30 @@ class map_controller extends ChangeNotifier {
 
   onMapCreated(GoogleMapController gmc) async {
     _mapsController = gmc;
-    getPosicao();
+    await getPosicao();
+    await setMarker();
   }
 
-  getMarker() async {
+  setMarker() async {
     Position posicao = await _posicaoAtual();
 
+    String imgurl = "https://cdn3.iconfinder.com/data/icons/map-objects/154/sun-light-poi-pointer-location-160.png";
+    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl))
+        .load(imgurl))
+        .buffer
+        .asUint8List();
     markers.add(Marker(
         markerId: MarkerId('markerUsuario'),
         position: LatLng(posicao.latitude, posicao.longitude),
-        icon: BitmapDescriptor.defaultMarker
+        icon: BitmapDescriptor.fromBytes(bytes),
+        draggable: true,
+
 
     ));
     notifyListeners();
+    return markers;
   }
-  getPosicao() async {
+  Future<LatLng> getPosicao() async {
     try {
       Position posicao = await _posicaoAtual();
       lat = posicao.latitude;
@@ -44,7 +54,7 @@ class map_controller extends ChangeNotifier {
       erro = e.toString();
     }
     notifyListeners();
-
+    return LatLng(lat, long);
   }
   void moveCameraToPosition(LatLng position) {
     _mapsController.animateCamera(CameraUpdate.newCameraPosition(
