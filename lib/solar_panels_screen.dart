@@ -52,7 +52,8 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                       leading: Icon(Icons.home_work_rounded),
                       title: Container(
                           child: Text(
-                              '${docs[index]['nome']}')), // Altere o título para cada item
+                              '${docs[index]['nome']}')
+                      ), // Altere o título para cada item
                       subtitle: Column(
                         crossAxisAlignment:CrossAxisAlignment.start,
                         children: [
