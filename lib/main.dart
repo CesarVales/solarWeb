@@ -9,7 +9,7 @@ import 'package:solar_web/drawer.dart';
 import 'package:solar_web/my_bottom_sheet.dart';
 import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
-import 'package:solar_web/searchScreen.dart';
+import 'package:solar_web/SearchScreen.dart';
 import 'package:solar_web/services/auth_service.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
+
   var db = FirebaseFirestore.instance;
   var auth =  FirebaseAuth.instance;
 
@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                 child: FloatingActionButton.extended(
                   onPressed: () async {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const searchScreen())
+                        MaterialPageRoute(builder: (context) => const SearchScreen())
                     );
                     // final usuario =  await lerUsuario('Cesinha');
                     // if(usuario != null){
@@ -104,9 +104,7 @@ class _mapWidgetState extends State<mapWidget> {
   @override
   Widget build(BuildContext context) {
     var searchBarControler = TextEditingController();
-    if (globals.posicaoEnd != null) {
-      searchBarControler.text = globals.posicaoEnd!.formattedAddress!;
-    }
+
     return Scaffold(
       body: Stack(children: [
         ChangeNotifierProvider<map_controller>(
@@ -114,7 +112,9 @@ class _mapWidgetState extends State<mapWidget> {
           child: Builder(
             builder: (context) {
               final local = context.watch<map_controller>();
-
+              if (globals.posicaoEnd != null) {
+                searchBarControler.text = globals.posicaoEnd!.formattedAddress!;
+              }
               return GoogleMap(
                 initialCameraPosition: CameraPosition(
                   target: LatLng(local.lat, local.long),
@@ -150,7 +150,7 @@ class _mapWidgetState extends State<mapWidget> {
               onTap: () async {
                 if(searchBarControler.text.isEmpty){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const searchScreen())
+                      MaterialPageRoute(builder: (context) => const SearchScreen())
                   );
                 }
 

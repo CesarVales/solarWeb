@@ -5,16 +5,17 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solar_web/map_controller.dart';
-import 'package:solar_web/searchScreen.dart';
+import 'package:solar_web/SearchScreen.dart';
 import 'package:solar_web/globals.dart' as globals;
 
-class mapWidget extends StatefulWidget {
+class MapWidget extends StatefulWidget {
   @override
-  State<mapWidget> createState() => _mapWidgetState();
+  State<MapWidget> createState() => _MapWidgetState();
 }
 
-class _mapWidgetState extends State<mapWidget> {
+class _MapWidgetState extends State<MapWidget> {
   late BitmapDescriptor icon;
+
   @override
   void initState() {
     super.initState();
@@ -22,83 +23,85 @@ class _mapWidgetState extends State<mapWidget> {
         ImageConfiguration(), 'assets/pino-de-localizacao.png')
         .then((value) => icon = value);
   }
+
   @override
   Widget build(BuildContext context) {
-    var searchBarControler = TextEditingController();
+    var searchBarController = TextEditingController();
     if (globals.posicaoEnd != null) {
-      searchBarControler.text = globals.posicaoEnd!.formattedAddress!;
-
-
+      searchBarController.text = globals.posicaoEnd!.formattedAddress!;
     }
 
     return Scaffold(
-      body: Stack(children: [
-        ChangeNotifierProvider<map_controller>(
-          create: (context) => map_controller(),
-          child: Builder(
-            builder: (context) {
-              final local = context.watch<map_controller>();
+      body: Stack(
+        children: [
+          ChangeNotifierProvider<map_controller>(
+            create: (context) => map_controller(),
+            child: Builder(
+              builder: (context) {
+                final local = context.watch<map_controller>();
 
-              return GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(local.lat, local.long),
-                  zoom: 18,
-                ),
-                zoomControlsEnabled: false,
-                myLocationButtonEnabled: true,
-                onMapCreated: local.onMapCreated,
-                myLocationEnabled: true,
-                buildingsEnabled: true,
-                markers: local.markers,
-
-              );
-            },
-          ),
-        ),
-        Container(
-
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: Offset(0, 2), // Define a direção da sombra (horizontal, vertical)
-                ),
-              ],
-            ),
-            child: TextField(
-
-              controller: searchBarControler,
-              onTap: () async {
-                if(searchBarControler.text.isEmpty){
-                  Navigator.pop(context,
-                      MaterialPageRoute(builder: (context) => const searchScreen())
-                  );}
-                // else {
-                //   globals.posicaoEnd = null;
-                // }
-
+                return GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(local.lat, local.long),
+                    zoom: 18,
+                  ),
+                  zoomControlsEnabled: false,
+                  myLocationButtonEnabled: true,
+                  onMapCreated: local.onMapCreated,
+                  myLocationEnabled: true,
+                  buildingsEnabled: true,
+                  markers: local.markers,
+                );
               },
-
-              // with some styling
-              decoration: InputDecoration(
-                suffixIcon: GestureDetector(onTap: () {
-                  searchBarControler.clear();
-                },child:Icon(Icons.clear)),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: "Busque um endereço",
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 8.0, top: 6.0),
+            ),
+          ),
+          Positioned(
+            top: 30,
+            left: 20,
+            right: 20,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
               ),
-            )),
-      ]),
+              child: TextField(
+                controller: searchBarController,
+                onTap: () async {
+                  if (searchBarController.text.isEmpty) {
+                    Navigator.pop(context,
+                        MaterialPageRoute(builder: (context) => const SearchScreen()));
+                  }
+                  // else {
+                  //   globals.posicaoEnd = null;
+                  // }
+                },
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      searchBarController.clear();
+                    },
+                    child: Icon(Icons.clear),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: "Busque um endereço",
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(left: 8.0, top: 6.0),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
-

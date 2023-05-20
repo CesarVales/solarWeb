@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
+import 'package:solar_web/newLocale.dart';
+import 'package:solar_web/solar_panels_screen.dart';
 
 class meus_locais extends StatefulWidget {
   const meus_locais({Key? key}) : super(key: key);
@@ -11,7 +13,7 @@ class meus_locais extends StatefulWidget {
 
 class _meus_locaisState extends State<meus_locais> {
   final _locaisStream =
-      FirebaseFirestore.instance.collection('local').snapshots();
+  FirebaseFirestore.instance.collection('local').snapshots();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -40,36 +42,108 @@ class _meus_locaisState extends State<meus_locais> {
 
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                  color: Colors.green,
-                  elevation: 5,
-                  child: ListTile(
-
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    trailing: Icon(Icons.arrow_forward),
-                    tileColor: Colors.grey[200],
-                    leading: Icon(Icons.home_work_rounded),
-                    title: Container(
-                        child: Text(
-                            '${docs[index]['nome']}')), // Altere o título para cada item
-                    subtitle: Column(
-                      crossAxisAlignment:CrossAxisAlignment.start,
-                      children: [
-                        Text('Id  ${docs[index]['id']}'),
-                        Text('Id Usuario ${docs[index]['id_usuario']}'),
-                        Text('Potencial mensal ${docs[index]['potencial_mensal']}'),
-                        Text('Latitude: ${docs[index]['latitude']} Longitude: ${docs[index]['longitude']}')
-                      ],
-                    )
-                  ));
+                color: Colors.green,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Image.network(
+                      'https://d2r9epyceweg5n.cloudfront.net/stores/002/321/284/products/kit-3-611-2afc20e8d66dc2ab2116795036769050-640-0.webp',
+                      width: double.infinity,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      tileColor: Colors.grey[200], // Cor de fundo do ListTile (amarelo claro)
+                      // leading: Container(
+                      //   width: 70,
+                      //   height: 70,
+                      //   child: Image.network(
+                      //     'https://d2r9epyceweg5n.cloudfront.net/stores/002/321/284/products/kit-3-611-2afc20e8d66dc2ab2116795036769050-640-0.webp',
+                      //     width: 80, // definir a largura da imagem
+                      //     height: 70, // definir a altura da imagem
+                      //     fit: BoxFit.cover, // ajustar a imagem ao tamanho do container
+                      //   ),
+                      // ),
+                      title: Text(
+                        '${docs[index]['nome']}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Id: ${docs[index]['id']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54, // Cor do texto (preto claro)
+                            ),
+                          ),
+                          Text(
+                            'Id Usuario: ${docs[index]['id_usuario']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          Text(
+                            'Potencial mensal: ${docs[index]['potencial_mensal']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          Text(
+                            'Latitude: ${docs[index]['latitude']} Longitude: ${docs[index]['longitude']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                      trailing: Icon(Icons.arrow_forward),
+                      onTap: () async {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => solar_panels_screen()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
             },
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
+            separatorBuilder: (BuildContext context, int index) => const Divider(),
+
           );
+
         },
       ),
-    );
+      floatingActionButton: FloatingActionButton(
+
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => newLocale()),
+          );
+        },
+
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green[800],
+      ),
+
+
+    )    ;
   }
 }
 

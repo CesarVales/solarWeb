@@ -11,7 +11,7 @@ class solar_panels_screen extends StatefulWidget {
 
 class _solar_panels_screenState extends State<solar_panels_screen> {
   final _locaisStream =
-  FirebaseFirestore.instance.collection('painel').snapshots();
+  FirebaseFirestore.instance.collection('placa').snapshots();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -33,6 +33,7 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
           }
           var docs = snapshot.data!.docs;
           return ListView.separated(
+
             padding: const EdgeInsets.all(10),
             shrinkWrap: true,
             //controller: scrollController,
@@ -40,30 +41,67 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
 
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                  color: Colors.green,
-                  elevation: 5,
-                  child: ListTile(
-
-                      contentPadding: EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      trailing: Icon(Icons.arrow_forward),
-                      tileColor: Colors.grey[200],
-                      leading: Icon(Icons.home_work_rounded),
-                      title: Container(
-                          child: Text(
-                              '${docs[index]['nome']}')
-                      ), // Altere o título para cada item
+                color: Colors.green,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.network(
+                      'https://s3.static.brasilescola.uol.com.br/img/2019/01/aproveitamento-energia-solar.jpeg',
+                      fit: BoxFit.cover,
+                      height: 100,
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(16, 20, 16, 10), // Aumenta o espaço superior
+                      tileColor: Colors.amber[50], // Cor de fundo do ListTile (amarelo claro)
+                      title: Text(
+                        '${docs[index]['modelo']}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       subtitle: Column(
-                        crossAxisAlignment:CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Id  ${docs[index]['id']}'),
-                          Text('Id Usuario ${docs[index]['id_usuario']}'),
-                          Text('Potencial mensal ${docs[index]['potencial_mensal']}'),
-                          Text('Latitude: ${docs[index]['latitude']} Longitude: ${docs[index]['longitude']}')
+                          Text(
+                            'Id: ${docs[index]['id']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54, // Cor do texto (preto claro)
+                            ),
+                          ),
+                          Text(
+                            'Id local: ${docs[index]['id_local']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          Text(
+                            'Potencial mensal: ${docs[index]['KWH']} KHW',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          Text(
+                            'Data Instalação: ${docs[index]['data']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
                         ],
-                      )
-                  ));
+                      ),
+                      trailing: Icon(Icons.arrow_forward),
+                    ),
+                  ],
+                ),
+              );
+
             },
             separatorBuilder: (BuildContext context, int index) =>
             const Divider(),
