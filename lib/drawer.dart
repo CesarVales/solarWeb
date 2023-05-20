@@ -11,6 +11,7 @@ import 'login.dart';
 import 'newLocale.dart';
 import 'minha_conta.dart';
 import 'newManutencao.dart';
+import 'newPlaca.dart';
 void _signOut() {
   FirebaseAuth.instance.signOut();
   //FirebaseUser user = FirebaseAuth.instance.currentUser;

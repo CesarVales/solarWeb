@@ -11,7 +11,7 @@ import 'login.dart';
 import 'newLocale.dart';
 import 'package:intl/intl.dart';
 
-class manutencao extends StatelessWidget {
+class novaPlaca extends StatelessWidget {
   final _realizador = TextEditingController();
   final _email = TextEditingController();
   //final _meses = TextEditingController();
@@ -38,19 +38,21 @@ class manutencao extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+
             const SizedBox(
               width: 300,
               child: Text(
-                "Dados da Manutenção",
+                "Dados da Placa",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 25,
                 ),
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
+
 
             SizedBox(
               width: 300.0,
@@ -61,7 +63,7 @@ class manutencao extends StatelessWidget {
                     borderRadius: BorderRadius.circular(60),
 
                   ),
-                  labelText: 'Descrição da manutenção',
+                  labelText: 'Modelo da Placa',
                 ),
               ),
             ),
@@ -71,6 +73,7 @@ class manutencao extends StatelessWidget {
                   height: 10.0
               ),
             ),
+
             SizedBox(
               width: 300.0,
               child: TextField(
@@ -79,7 +82,7 @@ class manutencao extends StatelessWidget {
                     borderRadius: BorderRadius.circular(60),
 
                   ),
-                  labelText: 'Data da manutenção',
+                  labelText: 'Data da Instalação',
                 ),
                 readOnly: true,
                 onTap: () async {
@@ -100,42 +103,7 @@ class manutencao extends StatelessWidget {
                 controller: _data,
               ),
             ),
-            const SizedBox(
-              child: SizedBox(
-                  width: 10.0,
-                  height: 10.0
-              ),
-            ),
-            const SizedBox(
-              width: 300,
-              child: Text(
-                "Dados do realizador",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-            ),
-            const SizedBox(
-              child: SizedBox(
-                  width: 10.0,
-                  height: 10.0
-              ),
-            ),
-            SizedBox(
 
-              width: 300.0,
-              child: TextField(
-                controller: _realizador,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(60),
-
-                  ),
-                  labelText: 'Nome',
-                ),
-              ),
-            ),
             const SizedBox(
               child: SizedBox(
                   width: 10.0,
@@ -151,8 +119,13 @@ class manutencao extends StatelessWidget {
                     borderRadius: BorderRadius.circular(60),
 
                   ),
-                  labelText: 'Telefone',
+                  labelText: 'Quantidade',
                 ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+
               ),
             ),
             const SizedBox(
@@ -171,9 +144,9 @@ class manutencao extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                criarManutencao(_telefone.text, _data.text, _descricao.text, _realizador.text);
+                // criarManutencao(_telefone.text, _data.text, _descricao.text, _realizador.text);
               },
-              child: Text('Salvar Manutenção'),
+              child: Text('Salvar Placa'),
             ),
             const SizedBox(
               child: SizedBox(
