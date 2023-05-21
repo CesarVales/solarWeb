@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/newLocale.dart';
+import 'package:solar_web/my_maintenance2.dart';
 import 'package:solar_web/solar_panels_screen.dart';
 
 class meus_locais extends StatefulWidget {
@@ -115,6 +116,7 @@ class _meus_locaisState extends State<meus_locais> {
                         children:  [
                           InkWell(
                             onTap: () {
+
                               // Lógica do onTap
                               print('Ícone pressionado!');
                             },
@@ -124,8 +126,11 @@ class _meus_locaisState extends State<meus_locais> {
                           ),
                           SizedBox(height: 3),
                           InkWell(
-                            onTap: () {
-
+                            onTap: () async {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => my_maintenance()),
+                              );
                               print('Ícone pressionado!');
                             },
                             child: Icon(
