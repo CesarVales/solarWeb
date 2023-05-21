@@ -96,7 +96,29 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                           ),
                         ],
                       ),
-                      trailing: Icon(Icons.arrow_forward),
+                      trailing: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children:  [
+                          InkWell(
+                            onTap: () {
+                              // Lógica do onTap
+                              print('Ícone pressionado!');
+                            },
+                            child: Icon(
+                              Icons.solar_power_outlined,
+                            ),
+                          ),
+                          SizedBox(height: 3),
+                          InkWell(
+                            onTap: () {
+
+                              print('Ícone pressionado!');
+                            },
+                            child: Icon(
+                              Icons.build_rounded,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

@@ -111,7 +111,29 @@ class _meus_locaisState extends State<meus_locais> {
                           ),
                         ],
                       ),
-                      trailing: Icon(Icons.arrow_forward),
+                      trailing: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children:  [
+                          InkWell(
+                            onTap: () {
+                              // Lógica do onTap
+                              print('Ícone pressionado!');
+                            },
+                            child: Icon(
+                              Icons.solar_power_outlined,
+                            ),
+                          ),
+                          SizedBox(height: 3),
+                          InkWell(
+                            onTap: () {
+
+                              print('Ícone pressionado!');
+                            },
+                            child: Icon(
+                              Icons.build_rounded,
+                            ),
+                          )
+                        ],
+                      ),
                       onTap: () async {
                         Navigator.pushReplacement(
                           context,
