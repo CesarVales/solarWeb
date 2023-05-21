@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/newLocale.dart';
-import 'package:solar_web/my_maintenance2.dart';
+import 'package:solar_web/my_maintenance.dart';
 import 'package:solar_web/solar_panels_screen.dart';
 
 class meus_locais extends StatefulWidget {
