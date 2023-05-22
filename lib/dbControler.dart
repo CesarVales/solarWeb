@@ -67,21 +67,29 @@ Future<Map<String, dynamic>?> lerLocal(String nome) async {
   }
 }
 
-Future criarLocal({ required double latitude, required double longitude, required String nome }) async {
+ criarLocal({ required double latitude, required double longitude, required String nome , required String endereco }) async {
 
   User? user = auth.currentUser;
   var email = user?.email;
-  final id_usuario = FirebaseFirestore.instance.collection('usuario').where('login',isEqualTo: email);
+  print(email);
+  final querySnapshotId_usuario = await FirebaseFirestore.instance.collection('usuario').where('login',isEqualTo: email).limit(1).get();
+  var docsUsu = querySnapshotId_usuario.docs;
+  var id_usuario = (docsUsu.first.data())['id'];
+  //final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(email);
+
   print(id_usuario);
+  print(id_usuario);
+  var id = (int.parse(await getLastId('local'))+1);
   final json = {
-    "id": (int.parse(await getLastId('local'))+1),
+    "id": id,
     "id_usuario":id_usuario,
     "latitude": latitude,
     "longitude": longitude,
     "nome": nome,
+    "endereco": endereco,
 
   };
-  final docUsuario = FirebaseFirestore.instance.collection('local').doc(nome);
+  final docUsuario = FirebaseFirestore.instance.collection('local').doc(id.toString());
   await docUsuario.set(json);
 }
 

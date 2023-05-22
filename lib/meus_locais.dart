@@ -98,13 +98,13 @@ class _meus_locaisState extends State<meus_locais> {
                               color: Colors.black54,
                             ),
                           ),
-                          Text(
-                            'Potencial mensal: ${docs[index]['potencial_mensal']}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black54,
-                            ),
-                          ),
+                          // Text(
+                          //   'Potencial mensal: ${docs[index]['potencial_mensal']}',
+                          //   style: TextStyle(
+                          //     fontSize: 12,
+                          //     color: Colors.black54,
+                          //   ),
+                          // ),
                           Text(
                             'Latitude: ${docs[index]['latitude']} Longitude: ${docs[index]['longitude']}',
                             style: TextStyle(

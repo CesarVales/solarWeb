@@ -110,11 +110,11 @@ class _newLocale extends State<newLocale>{
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
-              onPressed: () {
+              onPressed: () async {
                 //Cesinha 12/05
                   final apelido = _tApelido.text;
                   final endereco = _tEndereco.text;
-                  criarLocal( latitude: globals.latitudeAtual!, longitude: globals.longitudeAtual!, nome: apelido);
+                   criarLocal( latitude: globals.latitudeAtual!, longitude: globals.longitudeAtual!, nome: apelido,endereco: endereco);
               },
               child: Text('Cadastrar'),
             ),
