@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
+import 'globals.dart' as globals;
 
 class solar_panels_screen extends StatefulWidget {
   const solar_panels_screen({Key? key}) : super(key: key);
@@ -11,7 +12,10 @@ class solar_panels_screen extends StatefulWidget {
 
 class _solar_panels_screenState extends State<solar_panels_screen> {
   final _locaisStream =
-  FirebaseFirestore.instance.collection('placa').snapshots();
+  //FirebaseFirestore.instance.collection('placa').snapshots();
+
+   FirebaseFirestore.instance.collection('placa').where('id_local',isEqualTo: globals.id_local).snapshots();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -81,7 +85,7 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                             ),
                           ),
                           Text(
-                            'Potencial mensal: ${docs[index]['KWH']} KHW',
+                            'Potencial mensal: ${docs[index]['kwh']} KHW',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.black54,

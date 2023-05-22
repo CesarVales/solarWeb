@@ -118,8 +118,11 @@ class _meus_locaisState extends State<meus_locais> {
                         children:  [
                           InkWell(
                             onTap: () {
-
-                              // Lógica do onTap
+                              globals.id_local = docs[index]['id'];
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => solar_panels_screen()),
+                              );
                               print('Ícone pressionado!');
                             },
                             child: Icon(
@@ -130,11 +133,11 @@ class _meus_locaisState extends State<meus_locais> {
                           InkWell(
                             onTap: () async {
                               globals.id_local = docs[index]['id'];
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => my_maintenance()),
                               );
-                              print('Ícone pressionado!');
+
                             },
                             child: Icon(
                               Icons.build_rounded,

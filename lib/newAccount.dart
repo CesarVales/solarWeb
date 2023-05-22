@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solar_web/AppBarWidget.dart';
+import 'package:solar_web/dbControler.dart';
 import 'package:solar_web/drawer.dart';
 import 'package:solar_web/services/auth_service.dart';
 
@@ -22,6 +23,7 @@ class newAccount extends StatelessWidget {
     }on AuthException catch(e){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
     }
+    criarUsuario(login: _tLogin.text, nome:  _tNome.text, senha: _tSenha.text);
   }
   //cesinha fim
   @override

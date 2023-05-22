@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+var auth =  FirebaseAuth.instance;
 
 //Stream<List<User>> readUsers() => FirebaseFirestore.instance.collection('usuario').snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
 //Retorna ultimo id da coleçao
@@ -17,6 +19,7 @@ Future<String> getLastId(String colecao) async {
 // verifique se a consulta retornou algum documento
   if (querySnapshot.docs.isNotEmpty) {
     // o último ID de documento é o ID do documento encontrado na consulta
+
     String ultimoId = (querySnapshot.docs.first.id);
     print('Último ID de documento: $ultimoId');
     return  ultimoId;
@@ -28,13 +31,14 @@ Future<String> getLastId(String colecao) async {
 
 //Future criarUsuario({required int id , required Int id_usuario, required double latitude, required double longitude, required String casa}) async{
   Future criarUsuario({ required String login, required String nome, required String senha}) async{
+    var id =  ( int.parse(await getLastId('usuario'))+1);
     final json = {
+      "id": id,
       "login": login,
       "nome": nome,
       "senha": senha,
-
     };
-    final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(nome);
+    final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(login);
     await docUsuario.set(json);
   }
 
@@ -64,7 +68,14 @@ Future<Map<String, dynamic>?> lerLocal(String nome) async {
 }
 
 Future criarLocal({ required double latitude, required double longitude, required String nome }) async {
+
+  User? user = auth.currentUser;
+  var email = user?.email;
+  final id_usuario = FirebaseFirestore.instance.collection('usuario').where('login',isEqualTo: email);
+  print(id_usuario);
   final json = {
+    "id": (int.parse(await getLastId('local'))+1),
+    "id_usuario":id_usuario,
     "latitude": latitude,
     "longitude": longitude,
     "nome": nome,

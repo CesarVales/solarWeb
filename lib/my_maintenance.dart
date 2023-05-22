@@ -14,7 +14,7 @@ class my_maintenance extends StatefulWidget {
 
 class _my_maintenanceState extends State<my_maintenance> {
   final _manutencoesStream =
-  FirebaseFirestore.instance.collection('manutencao').where('id_local', isEqualTo: globals.id_local).snapshots();
+  FirebaseFirestore.instance.collection('manutencao').where('id_local', isEqualTo: globals.id_local.toString()).snapshots();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -26,21 +26,27 @@ class _my_maintenanceState extends State<my_maintenance> {
         stream: _manutencoesStream,
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasError) {
-            return Text("Erro De Conexão");
+            return const Text("Erro De Conexão");
           }
           if (!snapshot.hasData) {
-            return Text("Não Existem Manutenções Cadastradas");
+
+            return const Text("Não Existem Manutenções Cadastradas");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Carregando...');
           }
           var docs = snapshot.data!.docs;
+          if(docs.length == 0){
+            return const Align(child: Text("Não Existem Manutenções Cadastradas",style: TextStyle(
+              fontSize: 30,
+              color: Colors.black54,
+            ),));
+          }
           return ListView.separated(
             padding: const EdgeInsets.all(10),
             shrinkWrap: true,
             //controller: scrollController,
             itemCount: docs.length, // Altere o número de itens para exibir
-
             itemBuilder: (BuildContext context, int index) {
               return Card(
                 color: Colors.green,

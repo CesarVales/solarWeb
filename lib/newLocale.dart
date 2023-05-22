@@ -1,7 +1,12 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_place/google_place.dart';
 import 'package:solar_web/dbControler.dart';
-
+import 'package:solar_web/map_controller.dart';
+import 'globals.dart' as globals;
 import 'AppBarWidget.dart';
 
 class newLocale extends StatefulWidget {
@@ -10,12 +15,15 @@ class newLocale extends StatefulWidget {
   @override
   _newLocale createState() => _newLocale();
 }
+
 class _newLocale extends State<newLocale>{
   final _tApelido = TextEditingController();
   final _tEndereco = TextEditingController();
   bool myLocale = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>(); // cesinha
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,7 @@ class _newLocale extends State<newLocale>{
       //   ],
       // ),
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey,),
-      body: Container(
+      body: SingleChildScrollView(
         key: _formKey,
         child: Column(
           children: <Widget>[
@@ -82,21 +90,15 @@ class _newLocale extends State<newLocale>{
                   height: 10.0
               ),
             ),
-            SizedBox(
-              width: 300.0,
-              child: CheckboxListTile(
-                  title: Text("Deseja usar sua localização atual?"),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  value: this.myLocale,
-                  activeColor: Colors.green,
-                  onChanged:(bool? check){
-                    myLocale = !myLocale;
-                    setState(() {
-                      this.myLocale = check!;
-                    });
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20)),
+              onPressed: () {
+                //Cesinha 12/05
+                defineEnd();
 
-                    Text('Remember me');
-                  }),
+              },
+              child: Text('Usar Minha Localização'),
             ),
             SizedBox(
               child: SizedBox(
@@ -112,7 +114,7 @@ class _newLocale extends State<newLocale>{
                 //Cesinha 12/05
                   final apelido = _tApelido.text;
                   final endereco = _tEndereco.text;
-                  criarLocal( latitude: 0.0, longitude: 0.0, nome: apelido);
+                  criarLocal( latitude: globals.latitudeAtual!, longitude: globals.longitudeAtual!, nome: apelido);
               },
               child: Text('Cadastrar'),
             ),
@@ -123,5 +125,11 @@ class _newLocale extends State<newLocale>{
         ),
       ),
     );
+  }
+  defineEnd() async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(globals.latitudeAtual!, globals.longitudeAtual!);
+    String palcename = placemarks.first.subAdministrativeArea.toString() + ", " +  placemarks.first.street.toString() + ', ' + placemarks.first.name!;
+    print(palcename);
+    _tEndereco.text = palcename;
   }
 }

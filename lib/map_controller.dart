@@ -39,7 +39,7 @@ class map_controller extends ChangeNotifier {
 
   setMarker({LatLng? customPosition}) async {
 
-    Position posicao = await _posicaoAtual();
+    Position posicao = await posicaoAtual();
 
     String imgurl = "https://cdn3.iconfinder.com/data/icons/map-objects/154/sun-light-poi-pointer-location-160.png";
     Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl))
@@ -61,9 +61,11 @@ class map_controller extends ChangeNotifier {
   Future<LatLng> setPosicao({LatLng? customPosition}) async {
     try {
 
-      Position posicao = await _posicaoAtual();
+      Position posicao = await posicaoAtual();
       lat = posicao.latitude;
       long = posicao.longitude;
+      globals.latitudeAtual = posicao.latitude;
+      globals.longitudeAtual = posicao.longitude;
       if (customPosition != null) {
         _mapsController.animateCamera(CameraUpdate.newLatLng(customPosition));
       } else {
@@ -83,7 +85,7 @@ class map_controller extends ChangeNotifier {
       ),
     ));
   }
-  Future<Position> _posicaoAtual() async {
+  Future<Position> posicaoAtual() async {
     LocationPermission permissao;
 
     bool ativado = await Geolocator.isLocationServiceEnabled();
@@ -106,4 +108,5 @@ class map_controller extends ChangeNotifier {
     return await Geolocator.getCurrentPosition();
   }
 }
+
 

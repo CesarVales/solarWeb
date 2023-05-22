@@ -50,6 +50,7 @@ dependencies:
   firebase_auth: ^4.6.0
   google_place: ^0.4.7
   flutter_riverpod: ^2.3.6
+  geocoding: ^2.0.1
 
 assets:
   - assets/sol.png
