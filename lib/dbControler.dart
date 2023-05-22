@@ -9,15 +9,15 @@ Future<String> getLastId(String colecao) async {
   CollectionReference collectionRef = FirebaseFirestore.instance.collection(colecao);
 
 // execute a consulta ordenando por ID em ordem decrescente e limitando a um único documento
-  Query query = collectionRef.orderBy('local/usuario', descending: true).limit(1);
-  print("-------------------------------------");
-  print(query);
-
+//   Query query = collectionRef.orderBy('local/usuario', descending: true).limit(1);
+//   print("-------------------------------------");
+//   print(query);
+  Query query = collectionRef.orderBy('id', descending: true).limit(1);
   QuerySnapshot querySnapshot = await query.get();
 // verifique se a consulta retornou algum documento
   if (querySnapshot.docs.isNotEmpty) {
     // o último ID de documento é o ID do documento encontrado na consulta
-    String ultimoId = (querySnapshot.docs.first.id) ;
+    String ultimoId = (querySnapshot.docs.first.id);
     print('Último ID de documento: $ultimoId');
     return  ultimoId;
   }
@@ -159,7 +159,8 @@ Future updatePlaca( String data,int quantidade,String modelo, double kwh ,double
 }
 
 Future criarManutencao(String idLocal, String contato,String data,String descricao, String realizador) async {
-  String id = "1";
+  // String id = "1";
+  int id = int.parse(await getLastId("manutencao")) + 1;
   final json =  {
     "id": id,
     "id_local": idLocal,
@@ -167,9 +168,8 @@ Future criarManutencao(String idLocal, String contato,String data,String descric
     "data": data,
     "descricao": descricao,
     "realizador":realizador,
-    //"id": getLastId('placa'),
   };
 
-  final docUsuario = FirebaseFirestore.instance.collection('manutencao').doc(id);
+  final docUsuario = FirebaseFirestore.instance.collection('manutencao').doc(id.toString());
   await docUsuario.set(json);
 }
