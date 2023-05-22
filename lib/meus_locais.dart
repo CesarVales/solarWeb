@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/newLocale.dart';
-import 'package:solar_web/my_maintenance2.dart';
+import 'package:solar_web/my_maintenance.dart';
 import 'package:solar_web/solar_panels_screen.dart';
+import 'globals.dart' as globals;
+
 
 class meus_locais extends StatefulWidget {
   const meus_locais({Key? key}) : super(key: key);
@@ -127,6 +129,7 @@ class _meus_locaisState extends State<meus_locais> {
                           SizedBox(height: 3),
                           InkWell(
                             onTap: () async {
+                              globals.id_local = docs[index]['id'];
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (context) => my_maintenance()),

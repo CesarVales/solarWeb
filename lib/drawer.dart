@@ -112,7 +112,7 @@ class drawer extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 18)),
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => conta()));
+                  MaterialPageRoute(builder: (context) => my_account()));
             },
           ),
 

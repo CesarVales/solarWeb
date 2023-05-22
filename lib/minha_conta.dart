@@ -10,10 +10,18 @@ import 'home.dart';
 import 'login.dart';
 import 'newLocale.dart';
 
+class my_account extends StatefulWidget {
+  const my_account({Key? key}) : super(key: key);
 
-class conta extends StatelessWidget {
+  @override
+  State<my_account> createState() => _my_accountState();
+}
+
+
+class _my_accountState extends State<my_account> {
   final _nome = TextEditingController();
   final _email = TextEditingController();
+  final _senha = TextEditingController();
   final _meses = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -23,9 +31,12 @@ class conta extends StatelessWidget {
   Widget build(BuildContext context) {
     User? user = auth.currentUser;
 
-    _nome.text = 'admin';
+    //String _nome = user?.DisplayName as String;
     _email.text =  user?.email as String;
-    _meses.text = '6';
+    const List<String> list = <String>['3', '6', '9'];
+    String _meses = list.first;
+
+
     return Scaffold(
       key: _scaffoldKey,
 
@@ -33,40 +44,27 @@ class conta extends StatelessWidget {
 
       ),
       drawer: drawer(),
-
-      // appBar: AppBar(
-      //   title: Text('Minha Conta'), backgroundColor: Colors.green,
-      //   leading: Icon(Icons.sunny, color: Colors.yellow, size: 40,),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(Icons.menu),
-      //       onPressed: () {
-      //         Scaffold.of(context).openDrawer(); // exibe o novo Drawer
-      //       },
-      //     ),
-      //   ],
-      // ),
       body: Container(
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 300.0,
-              child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(60),
-
-                  ),
-                  labelText: 'Nome',
-                ),
-                controller: _nome,
-
-              ),
-            ),
+             const SizedBox(
+               height: 20,
+             ),
+            // SizedBox(
+            //   width: 300.0,
+            //   child: TextField(
+            //     readOnly: true,
+            //     decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(60),
+            //
+            //       ),
+            //       labelText: 'Nome',
+            //     ),
+            //     controller: _nome,
+            //
+            //   ),
+            // ),
             const SizedBox(
               child: SizedBox(
                   width: 10.0,
@@ -137,7 +135,10 @@ class conta extends StatelessWidget {
 
                   ),
                   labelText: 'Nova Senha',
+
                 ),
+                controller: _senha,
+
               ),
             ),
             const SizedBox(
@@ -150,6 +151,13 @@ class conta extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
+                if (user != null) {
+                  user.updatePassword(_senha as String).then((_) {
+                    print("Successfully changed password");
+                  }).catchError((error) {
+                    print("Password can't be changed" + error.toString());
+                  });
+                }
               },
               child: Text('Salvar Senha'),
             ),
@@ -191,22 +199,48 @@ class conta extends StatelessWidget {
                   height: 10.0
               ),
             ),
+            // SizedBox(
+            //   width: 300.0,
+            //   child: TextField(
+            //     decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(60),
+            //
+            //       ),
+            //       labelText: 'A cada quantos meses',
+            //     ),
+            //     keyboardType: TextInputType.number,
+            //     inputFormatters: <TextInputFormatter>[
+            //       FilteringTextInputFormatter.digitsOnly
+            //     ],
+            //     controller: _meses,
+            //   ),
+            // ),
             SizedBox(
-              width: 300.0,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(60),
+               width: 300.0,
+               child: DropdownButton<String>(
+          value: _meses,
+          icon: const Icon(Icons.notifications),
 
-                  ),
-                  labelText: 'A cada quantos meses',
-                ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                controller: _meses,
-              ),
+
+          underline: Container(
+            height: 2,
+            color: Colors.green,
+          ),
+          onChanged: (String? value) {
+
+            setState(() {
+              _meses = value!;
+              print(_meses);
+            });
+          },
+          items: list.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        )
             ),
 
             Row(

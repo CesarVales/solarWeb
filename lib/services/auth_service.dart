@@ -26,11 +26,10 @@ class AuthService extends ChangeNotifier{
     usuario = _auth.currentUser;
     notifyListeners();
   }
-  registrar(String email, String senha) async {
+  registrar(String email, String senha, String nome) async {
     try{
       await _auth.createUserWithEmailAndPassword(email: email, password: senha);
       _getUser();
-
     }on FirebaseAuthException catch(e){
         if(e.code == "weak-password") {
           throw AuthException('A senha é muito Fraca');

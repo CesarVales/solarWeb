@@ -18,7 +18,7 @@ class newAccount extends StatelessWidget {
 
   registrar(BuildContext context) async {
     try{
-      await Provider.of<AuthService>(context, listen: false).registrar(_tLogin.text,_tSenha.text);
+      await Provider.of<AuthService>(context, listen: false).registrar(_tLogin.text,_tSenha.text, _tNome.text);
     }on AuthException catch(e){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
     }
