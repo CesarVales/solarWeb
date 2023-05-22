@@ -142,12 +142,12 @@ class _meus_locaisState extends State<meus_locais> {
                           )
                         ],
                       ),
-                      onTap: () async {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => solar_panels_screen()),
-                        );
-                      },
+                      // onTap: () async {
+                      //   Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(builder: (context) => solar_panels_screen()),
+                      //   );
+                      //},
                     ),
                   ],
                 ),
