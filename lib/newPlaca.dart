@@ -12,14 +12,13 @@ import 'newLocale.dart';
 import 'package:intl/intl.dart';
 
 class novaPlaca extends StatelessWidget {
-  final _realizador = TextEditingController();
-  final _email = TextEditingController();
-  //final _meses = TextEditingController();
+  final _modelo = TextEditingController();
+  final _kwh = TextEditingController();
+  final _kwp = TextEditingController();
+  final _quantidade = TextEditingController();
   final _data = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final  _telefone = TextEditingController();
-  final  _descricao = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class novaPlaca extends StatelessWidget {
             SizedBox(
               width: 300.0,
               child: TextField(
-                controller: _descricao,
+                controller: _modelo,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
@@ -65,6 +64,54 @@ class novaPlaca extends StatelessWidget {
                   ),
                   labelText: 'Modelo da Placa',
                 ),
+              ),
+            ),
+            const SizedBox(
+              child: SizedBox(
+                  width: 10.0,
+                  height: 10.0
+              ),
+            ),
+            SizedBox(
+              width: 300.0,
+              child: TextField(
+                controller:_kwh ,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(60),
+
+                  ),
+                  labelText: 'KwH',
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+
+              ),
+            ),
+            const SizedBox(
+              child: SizedBox(
+                  width: 10.0,
+                  height: 10.0
+              ),
+            ),
+            SizedBox(
+              width: 300.0,
+              child: TextField(
+                controller:_kwp ,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(60),
+
+                  ),
+                  labelText: 'Kwp',
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+
               ),
             ),
             const SizedBox(
@@ -113,7 +160,7 @@ class novaPlaca extends StatelessWidget {
             SizedBox(
               width: 300.0,
               child: TextField(
-                controller:_telefone ,
+                controller:_quantidade ,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
@@ -144,6 +191,7 @@ class novaPlaca extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
+                criarPlaca("1", _data.text, _quantidade.text,  _modelo.text, _kwh.text , _kwp.text );
                 // criarManutencao(_telefone.text, _data.text, _descricao.text, _realizador.text);
               },
               child: Text('Salvar Placa'),
