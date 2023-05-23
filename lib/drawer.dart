@@ -112,17 +112,20 @@ class drawer extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => my_account()));
             },
           ),
-       ListTile(
-          title: Text("Log Out",style:TextStyle(color: Colors.white, fontSize: 18),),
-         leading: const Icon(
-           Icons.logout,
-           size: 35,
-           color: Colors.white,
-         ),
-          onTap:  ()  async {
-            _signOut();
-          },
-        ),
+       Visibility(
+         visible: !isNotLoged,
+         child: ListTile(
+            title: Text("Log Out",style:TextStyle(color: Colors.white, fontSize: 18),),
+           leading: const Icon(
+             Icons.logout,
+             size: 35,
+             color: Colors.white,
+           ),
+            onTap:  ()  async {
+              _signOut();
+            },
+          ),
+       ),
           Text(
             getUser().toString()
           ),
