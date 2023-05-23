@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'globals.dart' as globals;
+import 'newPlaca.dart';
+import 'drawer.dart';
 
 class solar_panels_screen extends StatefulWidget {
   const solar_panels_screen({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
 
       key: scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: scaffoldKey),
+      drawer: drawer(),
       body: StreamBuilder(
         stream: _locaisStream,
         builder: (BuildContext context, snapshot) {
@@ -135,6 +138,19 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => novaPlaca()),
+          );
+        },
+
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green[800],
+      ),
+
     );
   }
 }

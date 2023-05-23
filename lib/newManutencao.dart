@@ -10,6 +10,7 @@ import 'home.dart';
 import 'login.dart';
 import 'newLocale.dart';
 import 'package:intl/intl.dart';
+import 'globals.dart' as globals;
 
 class manutencao extends StatelessWidget {
   final _realizador = TextEditingController();
@@ -170,7 +171,7 @@ class manutencao extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                criarManutencao("1", _telefone.text, _data.text, _descricao.text, _realizador.text);
+                criarManutencao(globals.id_local ?? -1, _telefone.text, _data.text, _descricao.text, _realizador.text);
               },
               child: Text('Salvar Manutenção'),
             ),
