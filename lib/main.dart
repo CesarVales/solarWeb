@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,36 +16,29 @@ import 'dbControler.dart';
 import 'AppBarWidget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:solar_web/globals.dart' as globals;
+import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
   await Firebase.initializeApp();
 
-  runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider<map_controller>(
-        create: (_) => map_controller(),
-
-      ),
-      ChangeNotifierProvider(create: (context) => AuthService()),
-    ],child: MyApp()
-
-    )
-  );
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<map_controller>(
+      create: (_) => map_controller(),
+    ),
+    ChangeNotifierProvider(create: (context) => AuthService()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   State<MyApp> createState() => _MyAppState();
-
 }
 
 class _MyAppState extends State<MyApp> {
-
   var db = FirebaseFirestore.instance;
-  var auth =  FirebaseAuth.instance;
+  var auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +55,8 @@ class _MyAppState extends State<MyApp> {
         ),
         home: Scaffold(
             key: scaffoldKey,
-            appBar: AppBarWidget(scaffoldKey: scaffoldKey,
+            appBar: AppBarWidget(
+              scaffoldKey: scaffoldKey,
             ),
             drawer: drawer(),
             body: Stack(
@@ -76,9 +71,7 @@ class _MyAppState extends State<MyApp> {
                 widthFactor: 0.7,
                 child: FloatingActionButton.extended(
                   onPressed: () async {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const SearchScreen())
-                    );
+                    chamadaApi();
                     // final usuario =  await lerUsuario('Cesinha');
                     // if(usuario != null){
                     //   usuario.forEach((key, value) {
@@ -129,7 +122,6 @@ class _mapWidgetState extends State<mapWidget> {
           ),
         ),
         Container(
-
             padding: EdgeInsets.symmetric(horizontal: 10),
             margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
             decoration: BoxDecoration(
@@ -140,26 +132,28 @@ class _mapWidgetState extends State<mapWidget> {
                   color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 4,
-                  offset: Offset(0, 2), // Define a direção da sombra (horizontal, vertical)
+                  offset: Offset(0,
+                      2), // Define a direção da sombra (horizontal, vertical)
                 ),
               ],
             ),
             child: TextField(
-
               controller: searchBarControler,
               onTap: () async {
-                if(searchBarControler.text.isEmpty){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const SearchScreen())
-                  );
+                if (searchBarControler.text.isEmpty) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SearchScreen()));
                 }
-
               },
               // with some styling
               decoration: InputDecoration(
-                suffixIcon: GestureDetector(onTap: () {
-                  searchBarControler.clear();
-                },child:Icon(Icons.clear)),
+                suffixIcon: GestureDetector(
+                    onTap: () {
+                      searchBarControler.clear();
+                    },
+                    child: Icon(Icons.clear)),
                 filled: true,
                 fillColor: Colors.white,
                 hintText: "Busque um endereço",
@@ -173,3 +167,20 @@ class _mapWidgetState extends State<mapWidget> {
 }
 
 class AddressSearch {}
+
+Future<String> chamadaApi() async {
+  final response = await http.get(Uri.parse(
+      'https://re.jrc.ec.europa.eu/api/PVcalc?lat=${globals.latitudeAtual}&lon=${globals.longitudeAtual}&peakpower=1&loss=14'));
+  // final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
+
+  print(response.body);
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return 'aaaaaaaaa';
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
