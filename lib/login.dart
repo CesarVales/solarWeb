@@ -10,6 +10,7 @@ import 'package:solar_web/main.dart';
 import 'package:solar_web/services/auth_service.dart';
 import 'package:solar_web/services/userProvider.dart';
 import 'newAccount.dart';
+import 'globals.dart' as globals;
 
 import 'package:provider/provider.dart';
 // Em algum lugar do código, provavelmente no início do app:
@@ -35,6 +36,7 @@ class login extends StatelessWidget {
       User? user = FirebaseAuth.instance.currentUser;
       userProvider.setUser(user);
       //Vai para tela principal (Mapa)
+      globals.logged = "Sign Out";
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MyApp()),

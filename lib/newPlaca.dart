@@ -33,7 +33,7 @@ class novaPlaca extends StatelessWidget {
       drawer: drawer(),
 
       body: Container(
-        child: Column(
+        child: SingleChildScrollView(child: Column(
           children: <Widget>[
             const SizedBox(
               height: 20,
@@ -208,7 +208,7 @@ class novaPlaca extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
             )
           ],
-        ),
+        ),),
       ),
     );
   }

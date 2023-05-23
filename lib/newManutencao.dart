@@ -33,6 +33,7 @@ class manutencao extends StatelessWidget {
       drawer: drawer(),
 
       body: Container(
+        child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             const SizedBox(
@@ -187,6 +188,8 @@ class manutencao extends StatelessWidget {
             )
           ],
         ),
+        ),
+
       ),
     );
   }

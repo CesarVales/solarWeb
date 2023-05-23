@@ -4,4 +4,5 @@ DetailsResult? posicaoEnd;
 int? id_local           ;
 double? latitudeAtual  ;
 double? longitudeAtual ;
+String? logged = "Login";
 

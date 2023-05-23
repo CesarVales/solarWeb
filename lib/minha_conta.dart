@@ -30,7 +30,7 @@ class _my_accountState extends State<my_account> {
   @override
   Widget build(BuildContext context) {
     User? user = auth.currentUser;
-
+    String _nome2 = "";
     //String _nome = user?.DisplayName as String;
     _email.text =  user?.email as String;
     const List<String> list = <String>['3', '6', '9'];
@@ -45,26 +45,13 @@ class _my_accountState extends State<my_account> {
       ),
       drawer: drawer(),
       body: Container(
-        child: Column(
-          children: <Widget>[
-             const SizedBox(
-               height: 20,
-             ),
-            // SizedBox(
-            //   width: 300.0,
-            //   child: TextField(
-            //     readOnly: true,
-            //     decoration: InputDecoration(
-            //       border: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(60),
-            //
-            //       ),
-            //       labelText: 'Nome',
-            //     ),
-            //     controller: _nome,
-            //
-            //   ),
-            // ),
+        child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+            const SizedBox(
+            height: 20,
+            ),
+
             const SizedBox(
               child: SizedBox(
                   width: 10.0,
@@ -151,8 +138,9 @@ class _my_accountState extends State<my_account> {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
+                _nome2 = _senha.text;
                 if (user != null) {
-                  user.updatePassword(_senha as String).then((_) {
+                  user.updatePassword(_nome2).then((_) {
                     print("Successfully changed password");
                   }).catchError((error) {
                     print("Password can't be changed" + error.toString());
@@ -199,48 +187,32 @@ class _my_accountState extends State<my_account> {
                   height: 10.0
               ),
             ),
-            // SizedBox(
-            //   width: 300.0,
-            //   child: TextField(
-            //     decoration: InputDecoration(
-            //       border: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(60),
-            //
-            //       ),
-            //       labelText: 'A cada quantos meses',
-            //     ),
-            //     keyboardType: TextInputType.number,
-            //     inputFormatters: <TextInputFormatter>[
-            //       FilteringTextInputFormatter.digitsOnly
-            //     ],
-            //     controller: _meses,
-            //   ),
-            // ),
+
             SizedBox(
-               width: 300.0,
-               child: DropdownButton<String>(
-          value: _meses,
-          icon: const Icon(Icons.notifications),
+                width: 300.0,
+                child: DropdownButton<String>(
+                  value: _meses,
+                  icon: const Icon(Icons.notifications),
 
 
-          underline: Container(
-            height: 2,
-            color: Colors.green,
-          ),
-          onChanged: (String? value) {
+                  underline: Container(
+                    height: 2,
+                    color: Colors.green,
+                  ),
+                  onChanged: (String? value) {
 
-            setState(() {
-              _meses = value!;
-              print(_meses);
-            });
-          },
-          items: list.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        )
+                    setState(() {
+                      _meses = value!;
+                      print(_meses);
+                    });
+                  },
+                  items: list.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                )
             ),
 
             Row(
@@ -249,6 +221,7 @@ class _my_accountState extends State<my_account> {
           ],
         ),
       ),
+    )
     );
   }
 
