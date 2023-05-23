@@ -31,9 +31,9 @@ Future<String> getLastId(String colecao) async {
 
 //Future criarUsuario({required int id , required Int id_usuario, required double latitude, required double longitude, required String casa}) async{
   Future criarUsuario({ required String login, required String nome, required String senha}) async{
-    var id =  ( int.parse(await getLastId('usuario'))+1);
+    // var id =  ( int.parse(await getLastId('usuario'))+1);
     final json = {
-      "id": id,
+      // "id": id,
       "login": login,
       "nome": nome,
       "senha": senha,

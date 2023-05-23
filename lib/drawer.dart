@@ -24,12 +24,14 @@ void _signOut() {
   );
 }
 class drawer extends StatelessWidget {
+  var auth =  FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.green,
       width: Get.width * 0.5,
+
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -115,9 +117,34 @@ class drawer extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => my_account()));
             },
           ),
-
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: ListTile(
+          title: Text("Log Out",style:TextStyle(fontWeight: FontWeight.bold),),
+          trailing: Icon(Icons.logout),
+          onTap:  ()  async {
+            _signOut();
+          },
+        ),)
+          ,Text(
+            getUser().toString()
+          ),
         ],
       ),
     );
+  }
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+  String? getUser()  {
+    var auth =  FirebaseAuth.instance;
+
+    User? user = auth.currentUser;
+    var usuario =  user?.email.toString();
+    if(usuario == null){
+      return 'Não Logado';
+    }
+    print("Usuário: ${user?.email}");
+    return usuario;
   }
 }
