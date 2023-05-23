@@ -30,8 +30,8 @@ class drawer extends StatelessWidget {
   Widget build(BuildContext context) {
     User? user = auth.currentUser;
     var usuario =  user?.email.toString();
-    var isLoged =  user == null ? false : true;
-    print("logado ??????$isLoged");
+    var isNotLoged =  user == null ? true : false;
+    print("logado ??????$isNotLoged");
     return Drawer(
       backgroundColor: Colors.green,
       width: Get.width * 0.5,
@@ -65,7 +65,7 @@ class drawer extends StatelessWidget {
           }),
           Builder(builder: (BuildContext context) {
             return Visibility(
-              visible: !isLoged,
+              visible: isNotLoged,
               child: ListTile(
                 title: const Text('Login',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
