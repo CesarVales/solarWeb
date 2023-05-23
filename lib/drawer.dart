@@ -95,27 +95,15 @@ class drawer extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => meus_locais()));
             },
           ),
+
           // ListTile(
-          //   title: Text('Artigos',
+          //   title: const Text('Manutenções',
           //       style: TextStyle(color: Colors.white, fontSize: 18)),
-          //   leading: Icon(
-          //     Icons.menu_book,
-          //     size: 35,
-          //     color: Colors.white,
-          //   ),
           //   onTap: () {
           //     Navigator.push(context,
           //         MaterialPageRoute(builder: (context) => manutencao()));
           //   },
           // ),
-          ListTile(
-            title: const Text('Manutenções',
-                style: TextStyle(color: Colors.white, fontSize: 18)),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => manutencao()));
-            },
-          ),
           ListTile(
             title: const Text('Minha conta',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
@@ -125,8 +113,12 @@ class drawer extends StatelessWidget {
             },
           ),
        ListTile(
-          title: Text("Log Out",style:TextStyle(fontWeight: FontWeight.bold),),
-          trailing: Icon(Icons.logout),
+          title: Text("Log Out",style:TextStyle(color: Colors.white, fontSize: 18),),
+         leading: const Icon(
+           Icons.logout,
+           size: 35,
+           color: Colors.white,
+         ),
           onTap:  ()  async {
             _signOut();
           },
