@@ -123,14 +123,14 @@ Future deleteLocal({ required String nome }) async {
 }
 
 // Future criarPlaca(String idLocal, String data,int quantidade,{ required String modelo, required kwh , required kpw }) async {
-Future criarPlaca(String idLocal, String data,String quantidade,String modelo, String kwh ,String kpw ) async {
+Future criarPlaca(int idLocal, String data,String quantidade,String modelo, String kwh ,String kpw ) async {
 
     // String lastId = await getLastId('placa');
     // if(lastId != null){
     //   int tmp = int.parse(lastId)+1;
     //   lastId = "$tmp";
     // }
-  String id = "2";
+  int id = int.parse(await getLastId("placa")) + 1;
     final json =  {
       "id_local": idLocal,
       "id": id,
@@ -142,7 +142,7 @@ Future criarPlaca(String idLocal, String data,String quantidade,String modelo, S
       //"id": last_id+1,
     };
 
-    final docUsuario = FirebaseFirestore.instance.collection('placa').doc(id);
+    final docUsuario = FirebaseFirestore.instance.collection('placa').doc(id.toString());
     await docUsuario.set(json);
 }
 
@@ -177,7 +177,7 @@ Future updatePlaca( String data,int quantidade,String modelo, double kwh ,double
   await docUsuario.update(json);
 }
 
-Future criarManutencao(String idLocal, String contato,String data,String descricao, String realizador) async {
+Future criarManutencao(int idLocal, String contato,String data,String descricao, String realizador) async {
   // String id = "1";
   int id = int.parse(await getLastId("manutencao")) + 1;
   final json =  {

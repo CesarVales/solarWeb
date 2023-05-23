@@ -4,6 +4,7 @@ import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/newLocale.dart';
 import 'package:solar_web/my_maintenance.dart';
 import 'package:solar_web/solar_panels_screen.dart';
+import 'drawer.dart';
 import 'globals.dart' as globals;
 
 class meus_locais extends StatefulWidget {
@@ -23,6 +24,7 @@ class _meus_locaisState extends State<meus_locais> {
       backgroundColor: Colors.amber[50],
       key: _scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
+      drawer: drawer(),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _locaisStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {

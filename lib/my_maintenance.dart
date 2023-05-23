@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'globals.dart' as globals;
+import 'drawer.dart';
 import 'package:solar_web/newManutencao.dart';
 import 'package:solar_web/solar_panels_screen.dart';
 
@@ -14,7 +15,7 @@ class my_maintenance extends StatefulWidget {
 
 class _my_maintenanceState extends State<my_maintenance> {
   final _manutencoesStream =
-  FirebaseFirestore.instance.collection('manutencao').where('id_local', isEqualTo: globals.id_local.toString()).snapshots();
+  FirebaseFirestore.instance.collection('manutencao').where('id_local', isEqualTo: globals.id_local).snapshots();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -22,6 +23,7 @@ class _my_maintenanceState extends State<my_maintenance> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: scaffoldKey),
+      drawer: drawer(),
       body: StreamBuilder(
         stream: _manutencoesStream,
         builder: (BuildContext context, snapshot) {
@@ -116,11 +118,10 @@ class _my_maintenanceState extends State<my_maintenance> {
       floatingActionButton: FloatingActionButton(
 
         onPressed: () {
-          print(globals.id_local);
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => manutencao()),
-          // );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => manutencao()),
+          );
         },
 
         child: Icon(Icons.add),

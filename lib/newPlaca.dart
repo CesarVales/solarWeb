@@ -10,6 +10,7 @@ import 'home.dart';
 import 'login.dart';
 import 'newLocale.dart';
 import 'package:intl/intl.dart';
+import 'globals.dart' as globals;
 
 class novaPlaca extends StatelessWidget {
   final _modelo = TextEditingController();
@@ -191,7 +192,7 @@ class novaPlaca extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                criarPlaca("1", _data.text, _quantidade.text,  _modelo.text, _kwh.text , _kwp.text );
+                criarPlaca(globals.id_local ?? -1, _data.text, _quantidade.text,  _modelo.text, _kwh.text , _kwp.text );
                 // criarManutencao(_telefone.text, _data.text, _descricao.text, _realizador.text);
               },
               child: Text('Salvar Placa'),
