@@ -28,6 +28,10 @@ class drawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = auth.currentUser;
+    var usuario =  user?.email.toString();
+    var isLoged =  user == null ? false : true;
+    print("logado ??????$isLoged");
     return Drawer(
       backgroundColor: Colors.green,
       width: Get.width * 0.5,
@@ -60,19 +64,22 @@ class drawer extends StatelessWidget {
             );
           }),
           Builder(builder: (BuildContext context) {
-            return ListTile(
-              title: const Text('Login',
-                  style: TextStyle(color: Colors.white, fontSize: 18)),
-              textColor: Colors.white,
-              leading: const Icon(
-                Icons.login,
-                size: 35,
-                color: Colors.white,
+            return Visibility(
+              visible: !isLoged,
+              child: ListTile(
+                title: const Text('Login',
+                    style: TextStyle(color: Colors.white, fontSize: 18)),
+                textColor: Colors.white,
+                leading: const Icon(
+                  Icons.login,
+                  size: 35,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => login(context: context,)));
+                },
               ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => login(context: context,)));
-              },
             );
           }),
           ListTile(
@@ -117,16 +124,14 @@ class drawer extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => my_account()));
             },
           ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: ListTile(
+       ListTile(
           title: Text("Log Out",style:TextStyle(fontWeight: FontWeight.bold),),
           trailing: Icon(Icons.logout),
           onTap:  ()  async {
             _signOut();
           },
-        ),)
-          ,Text(
+        ),
+          Text(
             getUser().toString()
           ),
         ],
