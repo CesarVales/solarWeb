@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/newLocale.dart';
 import 'package:solar_web/my_maintenance.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:solar_web/solar_panels_screen.dart';
 import 'drawer.dart';
+import 'dbControler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'globals.dart' as globals;
 
 class meus_locais extends StatefulWidget {
@@ -15,7 +18,10 @@ class meus_locais extends StatefulWidget {
 }
 
 class _meus_locaisState extends State<meus_locais> {
-  final _locaisStream = FirebaseFirestore.instance.collection('local').snapshots();
+  // User? user = FirebaseAuth.instance.currentUser;
+  // var email = user?.email;
+  // final _locaisStream = FirebaseFirestore.instance.collection('local').where('id_usuario', isEqualTo:email).snapshots();
+  final _locaisStream = lerLocal();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

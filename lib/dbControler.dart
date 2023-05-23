@@ -56,33 +56,38 @@ Future<String> getLastId(String colecao) async {
 
 
 
-Future<Map<String, dynamic>?> lerLocal(String nome) async {
-  final docUsuario = FirebaseFirestore.instance.collection('local').doc(nome);
-  final docSnapshot = await docUsuario.get();
-
-  if (docSnapshot.exists) {
-    return docSnapshot.data() as Map<String, dynamic>;
-  } else {
-    return null;
-  }
+// Future<Map<String, dynamic>?> lerLocal(String nome) async {
+Stream<QuerySnapshot<Map<String, dynamic>>> lerLocal() {
+  User? user = auth.currentUser;
+  var email = user?.email;
+  final stream = FirebaseFirestore.instance.collection('local').where('id_usuario', isEqualTo:email).snapshots();
+  return stream;
+  // final docUsuario = FirebaseFirestore.instance.collection('local').doc(nome);
+  // final docSnapshot = await docUsuario.get();
+  //
+  // if (docSnapshot.exists) {
+  //   return docSnapshot.data() as Map<String, dynamic>;
+  // } else {
+  //   return null;
+  // }
 }
 
  criarLocal({ required double latitude, required double longitude, required String nome , required String endereco }) async {
 
   User? user = auth.currentUser;
   var email = user?.email;
-  print(email);
-  final querySnapshotId_usuario = await FirebaseFirestore.instance.collection('usuario').where('login',isEqualTo: email).limit(1).get();
-  var docsUsu = querySnapshotId_usuario.docs;
-  var id_usuario = (docsUsu.first.data())['id'];
+  // print(email);
+  // final querySnapshotId_usuario = await FirebaseFirestore.instance.collection('usuario').where('login',isEqualTo: email).limit(1).get();
+  // var docsUsu = querySnapshotId_usuario.docs;
+  // var id_usuario = (docsUsu.first.data())['id'];
   //final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(email);
 
-  print(id_usuario);
-  print(id_usuario);
+  // print(id_usuario);
+  // print(id_usuario);
   var id = (int.parse(await getLastId('local'))+1);
   final json = {
     "id": id,
-    "id_usuario":id_usuario,
+    "id_usuario":email,
     "latitude": latitude,
     "longitude": longitude,
     "nome": nome,
