@@ -89,25 +89,30 @@ class drawer extends StatelessWidget {
             },
           ),
           // ListTile(
-          //   title: Text('Artigos',
+          //   title: const Text('Manutenções',
           //       style: TextStyle(color: Colors.white, fontSize: 18)),
-          //   leading: Icon(
-          //     Icons.menu_book,
-          //     size: 35,
-          //     color: Colors.white,
-          //   ),
           //   onTap: () {
           //     Navigator.push(context,
           //         MaterialPageRoute(builder: (context) => manutencao()));
           //   },
           // ),
-          ListTile(
-            title: const Text('Manutenções',
-                style: TextStyle(color: Colors.white, fontSize: 18)),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => manutencao()));
-            },
+
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: ListTile(
+          title: Text("Log Out",style:TextStyle(color: Colors.white, fontSize: 18),),
+          leading: const Icon(
+            Icons.logout,
+            size: 35,
+            color: Colors.white,
+          ),
+          //trailing: Icon(Icons.logout),
+          onTap:  ()  async {
+            _signOut();
+          },
+        ),)
+          ,Text(
+            getUser().toString()
           ),
           ListTile(
             title: const Text('Minha conta',
@@ -116,18 +121,6 @@ class drawer extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => my_account()));
             },
-          ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: ListTile(
-          title: Text("Log Out",style:TextStyle(fontWeight: FontWeight.bold),),
-          trailing: Icon(Icons.logout),
-          onTap:  ()  async {
-            _signOut();
-          },
-        ),)
-          ,Text(
-            getUser().toString()
           ),
         ],
       ),

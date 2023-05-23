@@ -30,19 +30,25 @@ class _my_accountState extends State<my_account> {
   @override
   Widget build(BuildContext context) {
     User? user = auth.currentUser;
-    String _nome2 = "";
-    //String _nome = user?.DisplayName as String;
-    _email.text =  user?.email as String;
+    print("USER: $user");
+    String _nome2 = '';
+
     const List<String> list = <String>['3', '6', '9'];
     String _meses = list.first;
-
-
+    if (user == null) {
+      return Scaffold(
+        key: _scaffoldKey,
+        appBar:AppBarWidget(scaffoldKey: _scaffoldKey),
+        drawer: drawer(),
+        body: Container(
+            child: Center(child: Text("Faça Login... \nFAÇA LOGIN IMEDIATAMENTE",style: TextStyle(fontSize: 20),))
+        ),
+      );
+    }
+    _email.text =  user?.email as String;
     return Scaffold(
       key: _scaffoldKey,
-
-      appBar: AppBarWidget(scaffoldKey: _scaffoldKey,
-
-      ),
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
       drawer: drawer(),
       body: Container(
         child: SingleChildScrollView(
@@ -174,7 +180,7 @@ class _my_accountState extends State<my_account> {
             const SizedBox(
               width: 300,
               child: Text(
-                "Quando você gostaría de receber notificações para a manutenção do seu equipamento?",
+                "Quando você gostaria de receber notificações para a manutenção do seu equipamento?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 11,
@@ -192,6 +198,7 @@ class _my_accountState extends State<my_account> {
                 width: 300.0,
                 child: DropdownButton<String>(
                   value: _meses,
+
                   icon: const Icon(Icons.notifications),
 
 

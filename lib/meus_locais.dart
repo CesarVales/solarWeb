@@ -18,7 +18,7 @@ class meus_locais extends StatefulWidget {
 }
 
 class _meus_locaisState extends State<meus_locais> {
-  // User? user = FirebaseAuth.instance.currentUser;
+  User? user = FirebaseAuth.instance.currentUser;
   // var email = user?.email;
   // final _locaisStream = FirebaseFirestore.instance.collection('local').where('id_usuario', isEqualTo:email).snapshots();
   final _locaisStream = lerLocal();
@@ -26,6 +26,16 @@ class _meus_locaisState extends State<meus_locais> {
 
   @override
   Widget build(BuildContext context) {
+    if (user == null) {
+      return Scaffold(
+        key: _scaffoldKey,
+        appBar:AppBarWidget(scaffoldKey: _scaffoldKey),
+        drawer: drawer(),
+        body: Container(
+            child: Center(child: Text("Faça Login... \nFAÇA LOGIN IMEDIATAMENTE",style: TextStyle(fontSize: 20),))
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.amber[50],
       key: _scaffoldKey,
