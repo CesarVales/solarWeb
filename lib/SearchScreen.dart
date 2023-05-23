@@ -137,8 +137,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             searchFieldController.text = posicaoEnd!.formattedAddress!;
                             globals.posicaoEnd = detalhes.result;
                             recomendados = [];
-                            Navigator.pop(context);
-                          });
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (context) =>  MyApp()));                          });
                         }
                       }
                     },

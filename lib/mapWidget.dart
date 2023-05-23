@@ -78,7 +78,7 @@ class _MapWidgetState extends State<MapWidget> {
                 onTap: () async {
                   if (searchBarController.text.isEmpty) {
                     Navigator.pop(context,
-                        MaterialPageRoute(builder: (context) => const SearchScreen()));
+                        MaterialPageRoute(builder: (context) =>  SearchScreen()));
                   }
                   // else {
                   //   globals.posicaoEnd = null;

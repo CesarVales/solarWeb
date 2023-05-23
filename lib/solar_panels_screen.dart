@@ -21,6 +21,7 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       key: scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: scaffoldKey),
       body: StreamBuilder(
@@ -102,25 +103,25 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                       ),
                       trailing: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:  [
-                          InkWell(
-                            onTap: () {
-                              // Lógica do onTap
-                              print('Ícone pressionado!');
-                            },
-                            child: Icon(
-                              Icons.solar_power_outlined,
-                            ),
-                          ),
-                          SizedBox(height: 3),
-                          InkWell(
-                            onTap: () {
-
-                              print('Ícone pressionado!');
-                            },
-                            child: Icon(
-                              Icons.build_rounded,
-                            ),
-                          )
+                          // InkWell(
+                          //   onTap: () {
+                          //     // Lógica do onTap
+                          //     print('Ícone pressionado!');
+                          //   },
+                          //   child: Icon(
+                          //     Icons.solar_power_outlined,
+                          //   ),
+                          // ),
+                          // SizedBox(height: 3),
+                          // InkWell(
+                          //   onTap: () {
+                          //
+                          //     print('Ícone pressionado!');
+                          //   },
+                          //   child: Icon(
+                          //     Icons.build_rounded,
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
