@@ -6,17 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:solar_web/DataScreen.dart';
 import 'package:solar_web/drawer.dart';
 import 'package:solar_web/my_bottom_sheet.dart';
 import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
 import 'package:solar_web/SearchScreen.dart';
+import 'package:solar_web/services/relatorio.dart';
+import 'package:solar_web/report.dart';
 import 'package:solar_web/services/auth_service.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:solar_web/globals.dart' as globals;
 import 'package:http/http.dart' as http;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +36,11 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   State<MyApp> createState() => _MyAppState();
+
 }
 
 class _MyAppState extends State<MyApp> {
@@ -43,12 +50,17 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
+
     if (globals.posicaoEnd != null) {
       // Faça algo com posicaoEnd
     }
+    final navigatorKey = GlobalKey<NavigatorState>();
+
     User? user = auth.currentUser;
     print("Usuário: ${user?.email}");
     return MaterialApp(
+        navigatorKey: navigatorKey,
+
         title: 'My App',
         theme: ThemeData(
           primarySwatch: Colors.green,
@@ -64,27 +76,23 @@ class _MyAppState extends State<MyApp> {
               children: [
                 mapWidget(),
                 const MyBottomSheet(),
+
               ],
             ),
-            floatingActionButton: Align(
-                heightFactor: 2.0,
-                widthFactor: 0.7,
-                child: FloatingActionButton.extended(
-                  onPressed: () async {
-                    chamadaApi();
-                    // final usuario =  await lerUsuario('Cesinha');
-                    // if(usuario != null){
-                    //   usuario.forEach((key, value) {
-                    //     print("$key - $value");
-                    //   });
-                    // }else{
-                    //   print('VALOR NULO');
-                    // }
-                  },
-                  label: Icon(Icons.article_outlined),
-                  splashColor: Colors.yellow,
-                  hoverColor: Colors.yellow,
-                ))));
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: ()  {
+                print(navigatorKey.currentState);
+                navigatorKey.currentState?.pushReplacement(
+                    MaterialPageRoute(builder: (context) => DataScreen()));
+
+
+
+              },
+              label: Icon(Icons.article_outlined),
+              splashColor: Colors.yellow,
+              hoverColor: Colors.yellow,
+            )
+        ));
   }
 }
 
@@ -168,19 +176,3 @@ class _mapWidgetState extends State<mapWidget> {
 
 class AddressSearch {}
 
-Future<String> chamadaApi() async {
-  final response = await http.get(Uri.parse(
-      'https://re.jrc.ec.europa.eu/api/PVcalc?lat=${globals.latitudeAtual}&lon=${globals.longitudeAtual}&peakpower=1&loss=14'));
-  // final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-
-  print(response.body);
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return 'aaaaaaaaa';
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
