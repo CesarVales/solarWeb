@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
               onPressed: ()  {
                 print(navigatorKey.currentState);
                 navigatorKey.currentState?.pushReplacement(
-                    MaterialPageRoute(builder: (context) => DataScreen()));
+                    MaterialPageRoute(builder: (context) => report()));
 
 
 

@@ -12,44 +12,43 @@ class DataScreen extends StatefulWidget {
   _DataScreenState createState() => _DataScreenState();
 }
 
-List<BarChartGroupData> getBarChartGroup(List<FlSpot> chartData){
-  List<BarChartGroupData> retorno=[];
-  var count =  0;
+List<BarChartGroupData> getBarChartGroup(List<FlSpot> chartData) {
+  List<BarChartGroupData> retorno = [];
+  var count = 0;
   for (var element in chartData) {
-    retorno.add(
-      BarChartGroupData(
-        x: ++count,
-        barRods: [
-          BarChartRodData(
-            y: chartData[(count-1)].y,
-            colors: [Colors.green],
-            width: 20,
-          ),
-        ],
-      )
-    );
-  }return retorno;
+    retorno.add(BarChartGroupData(
+      x: ++count,
+      barRods: [
+        BarChartRodData(
+          y: chartData[(count - 1)].y,
+          colors: [Colors.green],
+          width: 20,
+        ),
+      ],
+    ));
+  }
+  return retorno;
 }
-double getMaxChartData(List<FlSpot> chartData){
+
+double getMaxChartData(List<FlSpot> chartData) {
   var maior = 0.0;
   for (var element in chartData) {
-     maior = (element.y > maior) ? element.y : maior;
-
+    maior = (element.y > maior) ? element.y : maior;
   }
   return maior;
 }
+
 class _DataScreenState extends State<DataScreen> {
   List<FlSpot> _chartData = [];
   bool _isLoading = false;
 
-
   @override
   void initState() {
     super.initState();
-    fetchData();
+    chamadaApi();
   }
 
-  Future<void> fetchData() async {
+  Future<void> chamadaApi() async {
     setState(() {
       _isLoading = true;
     });
@@ -61,10 +60,12 @@ class _DataScreenState extends State<DataScreen> {
       print(parsed);
 
       if (response.statusCode == 200) {
-        final monthlyData = parsed['outputs']['monthly']['fixed'] as List<dynamic>;
+        final monthlyData =
+            parsed['outputs']['monthly']['fixed'] as List<dynamic>;
         setState(() {
           _chartData = monthlyData
-              .map<FlSpot>((item) => FlSpot(item['month'].toDouble(), item['E_m'].toDouble()))
+              .map<FlSpot>((item) =>
+                  FlSpot(item['month'].toDouble(), item['E_m'].toDouble()))
               .toList();
           _isLoading = false;
         });
@@ -88,75 +89,99 @@ class _DataScreenState extends State<DataScreen> {
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : _chartData.isEmpty
-          ? Center(child: Text('No data available'))
-          : Padding(
-        padding: EdgeInsets.all(16.0),
-        child: BarChart(
-          BarChartData(
-            minY: 0,
-            maxY: (getMaxChartData(_chartData)*1.1),
-            barGroups: getBarChartGroup(_chartData),
-            titlesData: FlTitlesData(
-              leftTitles: SideTitles(
-                showTitles: true,
-                interval: 5,
-                margin: 8,
-                getTitles: (value) {
-                  if (value % 50 == 0) {
-                    return value.toInt().toString();
-                  }
-                  return '';
-                },
-              ),
-              bottomTitles: SideTitles(
-                showTitles: true,
-                interval: 1,
-                margin: 8,
-                getTitles: (value) {
-                  switch (value.toInt()) {
-                    case 1:
-                      return 'Jan';
-                    case 2:
-                      return 'Fev';
-                    case 3:
-                      return 'Mar';
-                    case 4:
-                      return 'Abr';
-                    case 5:
-                      return 'Mai';
-                    case 6:
-                      return 'Jun';
-                    case 7:
-                      return 'Jul';
-                    case 8:
-                      return 'Ago';
-                    case 9:
-                      return 'Set';
-                    case 10:
-                      return 'Out';
-                    case 11:
-                      return 'Nov';
-                    case 12:
-                      return 'Dec';
-                    default:
-                      return '';
-                  }
-                },
-              ),
-            ),
-
-            borderData: FlBorderData(
-              show: false,
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.5),
-                width: 0.5,
-              ),
-            ),
-
-          ),
-        )
-        ,
-      ),
+              ? Center(child: Text('No data available'))
+              : Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 250,
+                        width: 400,
+                        child: BarChart(
+                          BarChartData(
+                            minY: 0,
+                            maxY: (getMaxChartData(_chartData) * 1.1),
+                            barGroups: getBarChartGroup(_chartData),
+                            titlesData: FlTitlesData(
+                              leftTitles: SideTitles(
+                                showTitles: true,
+                                interval: 5,
+                                margin: 8,
+                                getTitles: (value) {
+                                  if (value % 50 == 0) {
+                                    return value.toInt().toString();
+                                  }
+                                  return '';
+                                },
+                              ),
+                              bottomTitles: SideTitles(
+                                showTitles: true,
+                                interval: 1,
+                                margin: 8,
+                                getTitles: (value) {
+                                  switch (value.toInt()) {
+                                    case 1:
+                                      return 'Jan';
+                                    case 2:
+                                      return 'Fev';
+                                    case 3:
+                                      return 'Mar';
+                                    case 4:
+                                      return 'Abr';
+                                    case 5:
+                                      return 'Mai';
+                                    case 6:
+                                      return 'Jun';
+                                    case 7:
+                                      return 'Jul';
+                                    case 8:
+                                      return 'Ago';
+                                    case 9:
+                                      return 'Set';
+                                    case 10:
+                                      return 'Out';
+                                    case 11:
+                                      return 'Nov';
+                                    case 12:
+                                      return 'Dec';
+                                    default:
+                                      return '';
+                                  }
+                                },
+                              ),
+                            ),
+                            borderData: FlBorderData(
+                              show: false,
+                              border: Border.all(
+                                color: Colors.grey.withOpacity(0.5),
+                                width: 0.5,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Column(
+                          children: [
+                            Text(
+                                'Voce Geraria ${mediaGeracao(_chartData).toStringAsFixed(2)} KiloWats por mês'),
+                            Text(
+                                'Voce Geraria ${mediaGeracao(_chartData).toStringAsFixed(2)} KiloWats por mês')
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
     );
   }
+}
+
+double mediaGeracao(List<FlSpot> chartData) {
+  var media = 0.0;
+
+  for (var i in chartData) {
+    media += i.y;
+  }
+  return media / 12;
 }
