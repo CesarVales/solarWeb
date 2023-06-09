@@ -4,7 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/dbControler.dart';
 import 'package:solar_web/drawer.dart';
+import 'package:solar_web/home.dart';
+import 'package:solar_web/main.dart';
 import 'package:solar_web/services/auth_service.dart';
+import 'globals.dart' as globals;
+import 'login.dart';
 
 class newAccount extends StatelessWidget {
   final _tLogin = TextEditingController();
@@ -20,10 +24,12 @@ class newAccount extends StatelessWidget {
   registrar(BuildContext context) async {
     try{
       await Provider.of<AuthService>(context, listen: false).registrar(_tLogin.text,_tSenha.text, _tNome.text);
+      globals.createdAccount = true;
     }on AuthException catch(e){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
     }
     criarUsuario(login: _tLogin.text, nome:  _tNome.text, senha: _tSenha.text);
+
   }
   //cesinha fim
   @override
@@ -102,7 +108,50 @@ class newAccount extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                registrar(context);
+                if(_tSenha.text == "" && _tNome.text == "" && _tLogin.text == ""){
+                  showDialog(context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          title: Text("Erro"),
+                          content: Text("Preencha todos os campos!"),
+                          actions: <Widget>[
+                            TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }
+                            )
+                          ]
+                      );
+                    },
+                  );
+                }else {
+                  registrar(context);
+                  print("VAR GLOBAL");
+                  print(globals.createdAccount);
+                  if (globals.createdAccount == true) {
+                    showDialog(context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            title: Text("Sucesso"),
+                            content: Text("Conta criada com sucesso!"),
+                            actions: <Widget>[
+                              TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          MyApp()),
+                                    );
+                                  }
+                              )
+                            ]
+                        );
+                      },
+                    );
+                  }
+                }
               },
               child: Text('Cadastrar'),
             ),

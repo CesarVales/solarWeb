@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_place/google_place.dart';
 import 'package:solar_web/dbControler.dart';
 import 'package:solar_web/map_controller.dart';
+import 'package:solar_web/meus_locais.dart';
 import 'globals.dart' as globals;
 import 'AppBarWidget.dart';
 import 'drawer.dart';
@@ -116,7 +117,45 @@ class _newLocale extends State<newLocale>{
                 //Cesinha 12/05
                   final apelido = _tApelido.text;
                   final endereco = _tEndereco.text;
-                   criarLocal( latitude: globals.latitudeAtual ?? 0, longitude: globals.longitudeAtual ?? 0, nome: apelido,endereco: endereco);
+                  if(apelido != "" && endereco != ""){
+                    criarLocal( latitude: globals.latitudeAtual ?? 0, longitude: globals.longitudeAtual ?? 0, nome: apelido,endereco: endereco);
+                    showDialog(context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            title: Text("Sucesso"),
+                            content: Text("Local cadastrado com sucesso!"),
+                            actions: <Widget>[
+                              TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => meus_locais()),
+                                    );
+                                  }
+                              )
+                            ]
+                        );
+                      },
+                    );
+                  } else{
+                    showDialog(context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            title: Text("Erro"),
+                            content: Text("Preencha o apelido para o local e/ou forneça o endereço!"),
+                            actions: <Widget>[
+                              TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }
+                              )
+                            ]
+                        );
+                      },
+                    );
+                  }
               },
               child: Text('Cadastrar'),
             ),

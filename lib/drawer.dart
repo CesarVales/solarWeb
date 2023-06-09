@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:solar_web/main.dart';
 import 'package:solar_web/meus_locais.dart';
-
+import 'globals.dart' as globals;
 import 'home.dart';
 import 'login.dart';
 import 'newLocale.dart';
@@ -104,14 +104,23 @@ class drawer extends StatelessWidget {
           //         MaterialPageRoute(builder: (context) => manutencao()));
           //   },
           // ),
-          ListTile(
+      Visibility(
+        visible: !isNotLoged,
+        child: ListTile(
+
             title: const Text('Minha conta',
                 style: TextStyle(color: Colors.white, fontSize: 18)),
+            leading: const Icon(
+              Icons.person,
+              size: 35,
+              color: Colors.white,
+            ),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => my_account()));
             },
           ),
+      ),
        Visibility(
          visible: !isNotLoged,
          child: ListTile(
@@ -123,6 +132,12 @@ class drawer extends StatelessWidget {
            ),
             onTap:  ()  async {
               _signOut();
+              globals.createdAccount = false;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    MyApp()),
+              );
             },
           ),
        ),

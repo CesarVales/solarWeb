@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'globals.dart' as globals;
 var auth =  FirebaseAuth.instance;
 
 //Stream<List<User>> readUsers() => FirebaseFirestore.instance.collection('usuario').snapshots().map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
@@ -40,6 +41,7 @@ Future<String> getLastId(String colecao) async {
     };
     final docUsuario = FirebaseFirestore.instance.collection('usuario').doc(login);
     await docUsuario.set(json);
+
   }
 
   Future<Map<String, dynamic>?> lerUsuario(String nome) async {
@@ -182,14 +184,15 @@ Future updatePlaca( String data,int quantidade,String modelo, double kwh ,double
   await docUsuario.update(json);
 }
 
-Future criarManutencao(int idLocal, String contato,String data,String descricao, String realizador) async {
+Future criarManutencao(int idLocal, String contato,String data, String dataProx,String descricao, String realizador) async {
   // String id = "1";
   int id = int.parse(await getLastId("manutencao")) + 1;
   final json =  {
     "id": id,
-    "id_local": idLocal,
+    "id_placa": idLocal,
     "contato": contato,
     "data": data,
+    "dataProx": dataProx,
     "descricao": descricao,
     "realizador":realizador,
   };

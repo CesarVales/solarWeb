@@ -122,23 +122,9 @@ class _meus_locaisState extends State<meus_locais> {
                                 context,
                                 MaterialPageRoute(builder: (context) => solar_panels_screen()),
                               );
-                              print('Ícone pressionado!');
                             },
                             child: const Icon(
                               Icons.solar_power_outlined,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          InkWell(
-                            onTap: () async {
-                              globals.id_local = doc['id'];
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => my_maintenance()),
-                              );
-                            },
-                            child: const Icon(
-                              Icons.build_rounded,
                             ),
                           ),
                         ],

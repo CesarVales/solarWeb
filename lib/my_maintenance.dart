@@ -15,7 +15,7 @@ class my_maintenance extends StatefulWidget {
 
 class _my_maintenanceState extends State<my_maintenance> {
   final _manutencoesStream =
-  FirebaseFirestore.instance.collection('manutencao').where('id_local', isEqualTo: globals.id_local).snapshots();
+  FirebaseFirestore.instance.collection('manutencao').where('id_placa', isEqualTo: globals.id_placa).snapshots();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -89,6 +89,13 @@ class _my_maintenanceState extends State<my_maintenance> {
                           ),
                           Text(
                             'Data: ${docs[index]['data']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          Text(
+                            'Próxima Manutenção: ${docs[index]['dataProx'] ?? "Sem data"}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.black54,

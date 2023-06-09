@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'package:solar_web/dbControler.dart';
 import 'package:solar_web/drawer.dart';
+import 'package:solar_web/solar_panels_screen.dart';
 import 'newAccount.dart';
 import 'home.dart';
 import 'login.dart';
@@ -192,8 +193,46 @@ class novaPlaca extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                criarPlaca(globals.id_local ?? -1, _data.text, _quantidade.text,  _modelo.text, _kwh.text , _kwp.text );
-                // criarManutencao(_telefone.text, _data.text, _descricao.text, _realizador.text);
+                if(_data.text != "" && _quantidade.text != "" && _modelo.text != "" && _kwh.text != "" && _kwp.text != "" ){
+                  criarPlaca(globals.id_local ?? -1, _data.text, _quantidade.text,  _modelo.text, _kwh.text , _kwp.text );
+                  showDialog(context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          title: Text("Sucesso"),
+                          content: Text("Placa cadastrada com sucesso!"),
+                          actions: <Widget>[
+                            TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => solar_panels_screen()),
+                                  );
+                                }
+                            )
+                          ]
+                      );
+                    },
+                  );
+                }else{
+                  showDialog(context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          title: Text("Erro"),
+                          content: Text("Preencha o todos os campos antes de finalizar o cadastro!"),
+                          actions: <Widget>[
+                            TextButton(
+                                child: Text("OK"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }
+                            )
+                          ]
+                      );
+                    },
+                  );
+                }
+
               },
               child: Text('Salvar Placa'),
             ),

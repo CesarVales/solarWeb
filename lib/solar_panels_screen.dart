@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
 import 'globals.dart' as globals;
+import 'my_maintenance.dart';
 import 'newPlaca.dart';
 import 'drawer.dart';
 
@@ -104,27 +105,21 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                           ),
                         ],
                       ),
-                      trailing: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:  [
-                          // InkWell(
-                          //   onTap: () {
-                          //     // Lógica do onTap
-                          //     print('Ícone pressionado!');
-                          //   },
-                          //   child: Icon(
-                          //     Icons.solar_power_outlined,
-                          //   ),
-                          // ),
-                          // SizedBox(height: 3),
-                          // InkWell(
-                          //   onTap: () {
-                          //
-                          //     print('Ícone pressionado!');
-                          //   },
-                          //   child: Icon(
-                          //     Icons.build_rounded,
-                          //   ),
-                          // )
+                          InkWell(
+                            onTap: () async {
+                              globals.id_placa = docs[index]['id'];
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => my_maintenance()),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.build_rounded,
+                            ),
+                          ),
                         ],
                       ),
                     ),
