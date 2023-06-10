@@ -200,3 +200,14 @@ Future criarManutencao(int idLocal, String contato,String data, String dataProx,
   final docUsuario = FirebaseFirestore.instance.collection('manutencao').doc(id.toString());
   await docUsuario.set(json);
 }
+
+Future<Map<String, dynamic>?> lerSistemaReal(String imageUrl) async {
+  final docUsuario = FirebaseFirestore.instance.collection('sistemasReais').doc(imageUrl);
+  final docSnapshot = await docUsuario.get();
+
+  if (docSnapshot.exists) {
+    return docSnapshot.data() as Map<String, dynamic>;
+  } else {
+    return null;
+  }
+}

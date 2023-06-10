@@ -13,7 +13,7 @@ import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
 import 'package:solar_web/SearchScreen.dart';
 import 'package:solar_web/services/relatorio.dart';
-import 'package:solar_web/report.dart';
+import 'package:solar_web/Report.dart';
 import 'package:solar_web/services/auth_service.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
@@ -81,9 +81,8 @@ class _MyAppState extends State<MyApp> {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: ()  {
-                print(navigatorKey.currentState);
                 navigatorKey.currentState?.pushReplacement(
-                    MaterialPageRoute(builder: (context) => report()));
+                    MaterialPageRoute(builder: (context) => Report()));
 
 
 
