@@ -125,6 +125,8 @@ class _DataScreenState extends State<DataScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaEnergia = mediaGeracao(_chartData);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -144,151 +146,207 @@ class _DataScreenState extends State<DataScreen> {
           ? Center(child: Text('No data available'))
           : Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Container(
-              height: 300,
-              child: BarChart(
-                BarChartData(
-                  minY: 0,
-                  maxY: (getMaxChartData(_chartData) * 1.1),
-                  barGroups: getBarChartGroup(_chartData),
-                  titlesData: FlTitlesData(
-                    leftTitles: SideTitles(
-                      showTitles: true,
-                      interval: 5,
-                      margin: 8,
-                      reservedSize: 30,
-                      getTitles: (value) {
-                        if (value % 50 == 0) {
-                          return value.toInt().toString();
-                        }
-                        return '';
-                      },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 300,
+                child: BarChart(
+                  BarChartData(
+                    minY: 0,
+                    maxY: (getMaxChartData(_chartData) * 1.1),
+                    barGroups: getBarChartGroup(_chartData),
+                    titlesData: FlTitlesData(
+                      leftTitles: SideTitles(
+                        showTitles: true,
+                        interval: 5,
+                        margin: 8,
+                        reservedSize: 30,
+                        getTitles: (value) {
+                          if (value % 50 == 0) {
+                            return value.toInt().toString();
+                          }
+                          return '';
+                        },
+                      ),
+                      bottomTitles: SideTitles(
+                        showTitles: true,
+                        interval: 1,
+                        margin: 8,
+                        reservedSize: 30,
+                        getTitles: (value) {
+                          switch (value.toInt()) {
+                            case 1:
+                              return 'Jan';
+                            case 2:
+                              return 'Fev';
+                            case 3:
+                              return 'Mar';
+                            case 4:
+                              return 'Abr';
+                            case 5:
+                              return 'Mai';
+                            case 6:
+                              return 'Jun';
+                            case 7:
+                              return 'Jul';
+                            case 8:
+                              return 'Ago';
+                            case 9:
+                              return 'Set';
+                            case 10:
+                              return 'Out';
+                            case 11:
+                              return 'Nov';
+                            case 12:
+                              return 'Dec';
+                            default:
+                              return '';
+                          }
+                        },
+                      ),
                     ),
-                    bottomTitles: SideTitles(
-                      showTitles: true,
-                      interval: 1,
-                      margin: 8,
-                      reservedSize: 30,
-                      getTitles: (value) {
-                        switch (value.toInt()) {
-                          case 1:
-                            return 'Jan';
-                          case 2:
-                            return 'Fev';
-                          case 3:
-                            return 'Mar';
-                          case 4:
-                            return 'Abr';
-                          case 5:
-                            return 'Mai';
-                          case 6:
-                            return 'Jun';
-                          case 7:
-                            return 'Jul';
-                          case 8:
-                            return 'Ago';
-                          case 9:
-                            return 'Set';
-                          case 10:
-                            return 'Out';
-                          case 11:
-                            return 'Nov';
-                          case 12:
-                            return 'Dec';
-                          default:
-                            return '';
-                        }
-                      },
-                    ),
-                  ),
-                  borderData: FlBorderData(
-                    show: false,
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.5),
-                      width: 0.5,
+                    borderData: FlBorderData(
+                      show: false,
+                      border: Border.all(
+                        color: Colors.grey.withOpacity(0.5),
+                        width: 0.5,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Relatório',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.report,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Você geraria ${widget.consumo > widget.geracao ? mediaGeracao(_chartData).toStringAsFixed(2) : widget.geracao.toStringAsFixed(2)} KW/H por mês em média.',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Você economizaria R\$ ${(widget.preco * mediaGeracao(_chartData)).toStringAsFixed(2)} ao mês e R\$ ${(12 * widget.preco * mediaGeracao(_chartData)).toStringAsFixed(2)} ao ano',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Modelo utilizado - ${widget.modelo}',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.info,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ],
+              SizedBox(height: 16),
+              SizedBox(height: 16),
+              Text(
+                'Consumo vs. Geração',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+              AspectRatio(
+                aspectRatio: 1.5, // Controla a proporção do gráfico em pizza
+                child: PieChart(
+                  PieChartData(
+                    sections: [
+                      PieChartSectionData(
+                        color: Colors.green,
+                        value: mediaEnergia,
+                        title:
+                        '${mediaEnergia.toStringAsFixed(2)} KW/H',
+                        radius: 50,
+                        titleStyle: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: Colors.amber,
+                        value: widget.consumo,
+                        title:
+                        '${widget.consumo.toStringAsFixed(2)} KW/H',
+                        radius: 50,
+                        titleStyle: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                    sectionsSpace: 0,
+                    centerSpaceRadius: 40,
+                    startDegreeOffset: -90,
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Relatório',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Icon(
+                            Icons.report,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Você geraria ${widget.consumo > widget.geracao ? mediaEnergia.toStringAsFixed(2) : widget.geracao.toStringAsFixed(2)} KW/H por mês em média.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Você economizaria R\$ ${(widget.preco * mediaEnergia).toStringAsFixed(2)} ao mês e R\$ ${(12 * widget.preco * mediaEnergia).toStringAsFixed(2)} ao ano',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Modelo utilizado - ${widget.modelo}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Icon(
+                            Icons.info,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: widget.consumo < mediaEnergia, // Condição desejada
+                child: Text(
+                  'Atenção! Você geraria ${(mediaEnergia-widget.consumo).toStringAsFixed(2)} KW/H em excesso',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xBA801414),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
