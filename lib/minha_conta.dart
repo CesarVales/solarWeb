@@ -198,16 +198,12 @@ class _my_accountState extends State<my_account> {
                 width: 300.0,
                 child: DropdownButton<String>(
                   value: _meses,
-
                   icon: const Icon(Icons.notifications),
-
-
                   underline: Container(
                     height: 2,
                     color: Colors.green,
                   ),
                   onChanged: (String? value) {
-
                     setState(() {
                       _meses = value!;
                       print(_meses);

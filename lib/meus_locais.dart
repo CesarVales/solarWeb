@@ -118,10 +118,11 @@ class _meus_locaisState extends State<meus_locais> {
                           InkWell(
                             onTap: () {
                               globals.id_local = doc['id'];
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => solar_panels_screen()),
-                              );
+                              Navigator.of(context).pushNamed("/solar_panels_screen");
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => solar_panels_screen()),
+                              // );
                             },
                             child: const Icon(
                               Icons.solar_power_outlined,
@@ -140,10 +141,11 @@ class _meus_locaisState extends State<meus_locais> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => newLocale()),
-          );
+          Navigator.of(context).pushNamed("/newLocale");
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => newLocale()),
+          // );
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.green[800],

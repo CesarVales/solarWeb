@@ -187,10 +187,7 @@ class manutencao extends StatelessWidget {
                             TextButton(
                                 child: Text("OK"),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => my_maintenance()),
-                                  );
+                                  Navigator.of(context).pushNamed("/my_maintenance");
                                 }
                             )
                           ]

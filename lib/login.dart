@@ -114,8 +114,10 @@ class login extends StatelessWidget {
                 Text('Não tem uma conta?'),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => newAccount(context: context,)));},
+                    Navigator.of(context).pushNamed("/newAccount");
+                    // Navigator.push(context,
+                    //   MaterialPageRoute(builder: (context) => newAccount(context: context,)));
+                    },
                   child: Text('Criar conta'),
                 ),
               ],

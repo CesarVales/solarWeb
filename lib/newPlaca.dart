@@ -204,10 +204,7 @@ class novaPlaca extends StatelessWidget {
                             TextButton(
                                 child: Text("OK"),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => solar_panels_screen()),
-                                  );
+                                  Navigator.of(context).pushNamed("/solar_panels_screen");
                                 }
                             )
                           ]

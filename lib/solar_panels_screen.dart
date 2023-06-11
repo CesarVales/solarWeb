@@ -111,10 +111,7 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                           InkWell(
                             onTap: () async {
                               globals.id_placa = docs[index]['id'];
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => my_maintenance()),
-                              );
+                              Navigator.of(context).pushNamed("/my_maintenance");
                             },
                             child: const Icon(
                               Icons.build_rounded,
@@ -136,10 +133,11 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
       floatingActionButton: FloatingActionButton(
 
         onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => novaPlaca()),
-          );
+          Navigator.of(context).pushNamed("/novaPlaca");
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => novaPlaca()),
+          // );
         },
 
         child: Icon(Icons.add),

@@ -58,8 +58,9 @@ class drawer extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyApp()));
+                // Navigator.of(context).pushNamed("/");
+                 Navigator.push(context,
+                     MaterialPageRoute(builder: (context) => MyApp()));
               },
             );
           }),
@@ -76,8 +77,7 @@ class drawer extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => login(context: context,)));
+                  Navigator.of(context).pushNamed("/login");
                 },
               ),
             );
@@ -91,8 +91,7 @@ class drawer extends StatelessWidget {
               color: Colors.white,
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => meus_locais()));
+              Navigator.of(context).pushNamed("/meus_locais");
             },
           ),
 
@@ -116,8 +115,7 @@ class drawer extends StatelessWidget {
               color: Colors.white,
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => my_account()));
+              Navigator.of(context).pushNamed("/minha_conta");
             },
           ),
       ),

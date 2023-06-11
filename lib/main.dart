@@ -8,18 +8,27 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:solar_web/DataScreen.dart';
 import 'package:solar_web/drawer.dart';
+import 'package:solar_web/login.dart';
 import 'package:solar_web/my_bottom_sheet.dart';
 import 'package:solar_web/map_controller.dart';
 import 'package:get/get.dart';
 import 'package:solar_web/SearchScreen.dart';
+import 'package:solar_web/newAccount.dart';
 import 'package:solar_web/services/relatorio.dart';
 import 'package:solar_web/Report.dart';
 import 'package:solar_web/services/auth_service.dart';
+import 'package:solar_web/solar_panels_screen.dart';
 import 'dbControler.dart';
 import 'AppBarWidget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:solar_web/globals.dart' as globals;
 import 'package:http/http.dart' as http;
+
+import 'meus_locais.dart';
+import 'my_maintenance.dart';
+import 'minha_conta.dart';
+import 'newLocale.dart';
+import 'newPlaca.dart';
 
 
 void main() async {
@@ -65,6 +74,18 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
+        initialRoute: "/",
+        routes: {
+          "/meus_locais": (context) => meus_locais(),
+          "/minha_conta": (context) => my_account(),
+          "/my_maintenance": (context) => my_maintenance(),
+          "/login": (context) => login(context: context),
+          "/solar_panels_screen": (context) => solar_panels_screen(),
+          "/newLocale": (context) => newLocale(),
+          "/novaPlaca": (context) => novaPlaca(),
+          "/newAccount": (context) => newAccount(context: context),
+        },
+
         home: Scaffold(
             key: scaffoldKey,
             appBar: AppBarWidget(

@@ -125,10 +125,7 @@ class _my_maintenanceState extends State<my_maintenance> {
       floatingActionButton: FloatingActionButton(
 
         onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => manutencao()),
-          );
+          Navigator.of(context).pushNamed("/my_maintenance");
         },
 
         child: Icon(Icons.add),

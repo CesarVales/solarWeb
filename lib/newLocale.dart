@@ -128,10 +128,11 @@ class _newLocale extends State<newLocale>{
                               TextButton(
                                   child: Text("OK"),
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => meus_locais()),
-                                    );
+                                    Navigator.of(context).pushNamed("/meus_locais");
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(builder: (context) => meus_locais()),
+                                    // );
                                   }
                               )
                             ]
