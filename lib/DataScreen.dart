@@ -143,15 +143,16 @@ class _DataScreenState extends State<DataScreen> {
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : _chartData.isEmpty
-          ? Center(child: Text('No data available'))
+          ? Center(child: Text('Sem dados disponíveis'))
           : Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(left: 1,right: 1),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                height: 300,
+                height: 300,padding: EdgeInsets.only(top:25,right: 10),
                 child: BarChart(
+
                   BarChartData(
                     minY: 0,
                     maxY: (getMaxChartData(_chartData) * 1.1),
@@ -216,7 +217,6 @@ class _DataScreenState extends State<DataScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
               SizedBox(height: 16),
               Text(
                 'Consumo vs. Geração',
