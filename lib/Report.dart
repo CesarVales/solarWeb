@@ -29,10 +29,17 @@ class _ReportState extends State<Report> {
   @override
   void initState() {
     super.initState();
-    latController =
-        TextEditingController(text: globals.latitudeAtual?.toStringAsFixed(2));
-    longController =
-        TextEditingController(text: globals.longitudeAtual?.toStringAsFixed(2));
+    if(globals.posicaoEnd == null){
+      latController =
+          TextEditingController(text: globals.latitudeAtual?.toStringAsFixed(2));
+      longController =
+          TextEditingController(text: globals.longitudeAtual?.toStringAsFixed(2));
+    }else{
+      latController =
+          TextEditingController(text: globals.posicaoEnd?.geometry?.location?.lat?.toStringAsFixed(2));
+      longController =
+          TextEditingController(text: globals.posicaoEnd?.geometry?.location?.lng?.toStringAsFixed(2));
+    }
   }
 
   @override
