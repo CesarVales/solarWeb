@@ -204,9 +204,8 @@ class _my_accountState extends State<my_account> {
                     color: Colors.green,
                   ),
                   onChanged: (String? value) {
-                    setState(() {
-                      _meses = value!;
-                      print(_meses);
+                    setState(()=>{
+                      _meses = value!
                     });
                   },
                   items: list.map<DropdownMenuItem<String>>((String value) {

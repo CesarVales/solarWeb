@@ -142,6 +142,7 @@ Future criarPlaca(int idLocal, String data,String quantidade,String modelo, Stri
       "id_local": idLocal,
       "id": id,
       "data": data,
+      "dataUlt": data,
       "quantidade": quantidade,
       "modelo": modelo,
       "kwh":kwh,
@@ -184,15 +185,35 @@ Future updatePlaca( String data,int quantidade,String modelo, double kwh ,double
   await docUsuario.update(json);
 }
 
-Future criarManutencao(int idLocal, String contato,String data, String dataProx,String descricao, String realizador) async {
+String proxManutencao(String ultima){
+  DateTime ultimaDate = new DateFormat('dd/MM/yyyy').parse(ultima);
+  var newDate = new DateTime(ultimaDate.year, ultimaDate.month + 3, ultimaDate.day);
+  String resp = DateFormat('dd/MM/yyyy').format(newDate);
+  return resp;
+}
+
+Future criarManutencao(int idLocal, String ultMan, String contato,String data,String descricao, String realizador) async {
   // String id = "1";
   int id = int.parse(await getLastId("manutencao")) + 1;
+
+  DateTime dataDate = new DateFormat('dd/MM/yyyy').parse(data);
+  if(dataDate.isAfter(new DateFormat('dd/MM/yyyy').parse(ultMan))) {
+    FirebaseFirestore.instance.collection('placa').doc(idLocal.toString()).update({"dataUlt": data});
+    // String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+    // var newDate = new DateTime(pickedDate.year, pickedDate.month + 3, pickedDate.day);
+    // _data.text = formattedDate;
+    // formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
+    // _dataProx.text = formattedDate;
+
+  }
+
+
   final json =  {
     "id": id,
     "id_placa": idLocal,
     "contato": contato,
     "data": data,
-    "dataProx": dataProx,
+    // "dataProx": dataProx,
     "descricao": descricao,
     "realizador":realizador,
   };

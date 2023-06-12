@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solar_web/AppBarWidget.dart';
+import 'package:solar_web/dbControler.dart';
 import 'globals.dart' as globals;
 import 'my_maintenance.dart';
 import 'newPlaca.dart';
@@ -103,6 +104,22 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                               color: Colors.black54,
                             ),
                           ),
+                          Text(
+                            'Última Manutenção: ${docs[index]['dataUlt'] ?? "Sem data"}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          Text(
+                            // 'Próxima Manutenção: ${docs[index]['dataProx'] ?? "Sem data"}',
+                            'Próxima Manutenção: ${proxManutencao(docs[index]['dataUlt']) ?? "Sem data"}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+
                         ],
                       ),
                       trailing: Column(
@@ -111,6 +128,7 @@ class _solar_panels_screenState extends State<solar_panels_screen> {
                           InkWell(
                             onTap: () async {
                               globals.id_placa = docs[index]['id'];
+                              globals.ultMan_placa = docs[index]['dataUlt'];
                               Navigator.of(context).pushNamed("/my_maintenance");
                             },
                             child: const Icon(
