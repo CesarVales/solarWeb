@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,10 +11,18 @@ import 'newAccount.dart';
 import 'home.dart';
 import 'login.dart';
 import 'newLocale.dart';
+import 'componentesSeparados/dropDownPlacas.dart';
 import 'package:intl/intl.dart';
 import 'globals.dart' as globals;
 
-class novaPlaca extends StatelessWidget {
+class newPlaca extends StatefulWidget {
+  const newPlaca({Key? key}) : super(key: key);
+
+  @override
+  State<newPlaca> createState() => _new_placaState();
+}
+
+class _new_placaState extends State<newPlaca> {
   final _modelo = TextEditingController();
   final _kwh = TextEditingController();
   final _kwp = TextEditingController();
@@ -24,15 +33,11 @@ class novaPlaca extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //_meses.text = '6';
     return Scaffold(
       key: _scaffoldKey,
-
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey,
-
       ),
       drawer: drawer(),
-
       body: Container(
         child: SingleChildScrollView(child: Column(
           children: <Widget>[
@@ -54,7 +59,11 @@ class novaPlaca extends StatelessWidget {
               height: 20,
             ),
 
-
+            SizedBox(
+                width: 300.0,
+                child: dropDownPlacas()
+            ),
+            /*
             SizedBox(
               width: 300.0,
               child: TextField(
@@ -105,7 +114,6 @@ class novaPlaca extends StatelessWidget {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
-
                   ),
                   labelText: 'Kwp',
                 ),
@@ -115,7 +123,7 @@ class novaPlaca extends StatelessWidget {
                 ],
 
               ),
-            ),
+            ),*/
             const SizedBox(
               child: SizedBox(
                   width: 10.0,
@@ -129,7 +137,6 @@ class novaPlaca extends StatelessWidget {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(60),
-
                   ),
                   labelText: 'Data da Instalação',
                 ),
@@ -193,8 +200,9 @@ class novaPlaca extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
-                if(_data.text != "" && _quantidade.text != "" && _modelo.text != "" && _kwh.text != "" && _kwp.text != "" ){
-                  criarPlaca(globals.id_local ?? -1, _data.text, _quantidade.text,  _modelo.text, _kwh.text , _kwp.text );
+                if(_data.text != "" && _quantidade.text != "" && globals.potenciaKit != ''){
+                  print(globals.potenciaKit ?? '-1');
+                  criarPlaca(globals.id_local ?? -1, _data.text, _quantidade.text,  globals.modeloPlaca ?? '', globals.potenciaKit ?? '-1', globals.potenciaMax ?? '-1');
                   showDialog(context: context,
                     builder: (context) {
                       return AlertDialog(
@@ -249,6 +257,4 @@ class novaPlaca extends StatelessWidget {
     );
   }
 
-  _onClickNew(BuildContext context) {
-  }
 }

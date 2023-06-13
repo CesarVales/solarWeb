@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
           "/login": (context) => login(context: context),
           "/solar_panels_screen": (context) => solar_panels_screen(),
           "/newLocale": (context) => newLocale(),
-          "/novaPlaca": (context) => novaPlaca(),
+          "/novaPlaca": (context) => newPlaca(),
           "/newAccount": (context) => newAccount(context: context),
         },
 

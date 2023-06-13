@@ -7,4 +7,9 @@ double? latitudeAtual  ;
 double? longitudeAtual ;
 String? logged = "Login";
 bool? createdAccount = false;
+String? potenciaMax;
+String? potenciaKit;
+String? modeloPlaca;
+final placas = [''];
+
 

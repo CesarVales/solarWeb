@@ -23,6 +23,27 @@ class _meus_locaisState extends State<meus_locais> {
   // final _locaisStream = FirebaseFirestore.instance.collection('local').where('id_usuario', isEqualTo:email).snapshots();
   final _locaisStream = lerLocal();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    //fetchSolarPanels();
+    super.initState();
+    fetchSolarPanels();
+  }
+  List<Map<String, dynamic>> solarPanels = [];
+  void fetchSolarPanels() async {
+    final querySnapshot = await FirebaseFirestore.instance.collection('sistemasReais').get();
+    setState(() {
+      solarPanels = querySnapshot.docs
+          .map((document) => document.data())
+          .toList();
+    });
+    globals.placas.clear();
+    for (var element in solarPanels) {
+      print(element["Modelo"]);
+      globals.placas.add(element["Modelo"]);
+    }
+    globals.placas.toSet().toList();
+  }
 
   @override
   Widget build(BuildContext context) {
