@@ -29,6 +29,7 @@ import 'my_maintenance.dart';
 import 'minha_conta.dart';
 import 'newLocale.dart';
 import 'newPlaca.dart';
+import 'newManutencao.dart';
 
 
 void main() async {
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
           "/meus_locais": (context) => meus_locais(),
           "/minha_conta": (context) => my_account(),
           "/my_maintenance": (context) => my_maintenance(),
+          "/new_maintenance": (context) => novaManutencao(),
           "/login": (context) => login(context: context),
           "/solar_panels_screen": (context) => solar_panels_screen(),
           "/newLocale": (context) => newLocale(),

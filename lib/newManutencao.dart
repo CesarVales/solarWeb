@@ -13,11 +13,11 @@ import 'newLocale.dart';
 import 'package:intl/intl.dart';
 import 'globals.dart' as globals;
 
-class manutencao extends StatelessWidget {
+class novaManutencao extends StatelessWidget {
   final _realizador = TextEditingController();
   //final _meses = TextEditingController();
   final _data = TextEditingController();
-  final _dataProx = TextEditingController();
+  // final _dataProx = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final  _telefone = TextEditingController();
@@ -94,10 +94,10 @@ class manutencao extends StatelessWidget {
                   );
                   if(pickedDate != null ){
                     String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-                    var newDate = new DateTime(pickedDate.year, pickedDate.month + 3, pickedDate.day);
+                    // var newDate = new DateTime(pickedDate.year, pickedDate.month + 3, pickedDate.day);
                     _data.text = formattedDate;
-                    formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
-                    _dataProx.text = formattedDate;
+                    // formattedDate = DateFormat('dd/MM/yyyy').format(newDate);
+                    // _dataProx.text = formattedDate;
                   }else{
                     print("Date is not selected");
                   }
@@ -177,7 +177,7 @@ class manutencao extends StatelessWidget {
                   textStyle: const TextStyle(fontSize: 20)),
               onPressed: () {
                 if(_telefone.text != "" && _data.text != "" && _descricao.text != "" && _realizador.text != ""){
-                  criarManutencao(globals.id_placa ?? -1, _telefone.text, _data.text, _dataProx.text, _descricao.text, _realizador.text);
+                  criarManutencao(globals.id_placa ?? -1, globals.ultMan_placa ?? '', _telefone.text, _data.text, _descricao.text, _realizador.text);
                   showDialog(context: context,
                     builder: (context) {
                       return AlertDialog(

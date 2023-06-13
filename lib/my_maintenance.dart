@@ -94,13 +94,13 @@ class _my_maintenanceState extends State<my_maintenance> {
                               color: Colors.black54,
                             ),
                           ),
-                          Text(
-                            'Próxima Manutenção: ${docs[index]['dataProx'] ?? "Sem data"}',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black54,
-                            ),
-                          ),
+                          // Text(
+                          //   'Próxima Manutenção: ${docs[index]['dataProx'] ?? "Sem data"}',
+                          //   style: TextStyle(
+                          //     fontSize: 12,
+                          //     color: Colors.black54,
+                          //   ),
+                          // ),
                           Text(
                             'Contato: ${docs[index]['contato']}',
                             style: TextStyle(
@@ -125,7 +125,7 @@ class _my_maintenanceState extends State<my_maintenance> {
       floatingActionButton: FloatingActionButton(
 
         onPressed: () {
-          Navigator.of(context).pushNamed("/my_maintenance");
+          Navigator.of(context).pushNamed("/new_maintenance");
         },
 
         child: Icon(Icons.add),
