@@ -260,8 +260,8 @@ class _SolarPanelListState extends State<SolarPanelList> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Título da caixa de diálogo'),
-                      content: Text('Conteúdo da caixa de diálogo'),
+                      title: Text('Atenção'),
+                      content: Text('Preencha os campos acima'),
                       actions: [
                         TextButton(
                           onPressed: () {
